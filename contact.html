@@ -542,6 +542,31 @@
                 gap: 30px;
                 padding: 0 20px;
             }
+
+            .download-button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 15px;
+                padding: 12px 20px;
+                background: rgba(74, 144, 226, 0.15);
+                color: #4a90e2;
+                border: 1px solid rgba(74, 144, 226, 0.3);
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 0.95rem;
+                transition: all 0.3s ease;
+                width: 100%;
+                font-family: 'Arimo', sans-serif;
+            }
+
+            .download-button:hover {
+                background: rgba(74, 144, 226, 0.25);
+                border-color: rgba(74, 144, 226, 0.5);
+                transform: translateY(-2px);
+            }
         }
     </style>
 </head>
@@ -570,7 +595,7 @@
                     <span class="arrow">▼</span>
                 </a>
                 <div class="submenu" id="vehiclesSubmenu">
-                    <a href="nautilus25.html">Nautilus25'</a>
+                    <a href="sarica.html">Sarıca</a>
                 </div>
             </div>
             <a href="blog.html">Blog</a>
@@ -691,6 +716,18 @@
                     </a>
                 </div>
             </div>
+            
+            <div class="info-card">
+                    <div class="info-card-header">
+                        <h3 class="info-card-title">Sponsorluk</h3>
+                    </div>
+                    <p class="info-card-text">
+                        Nautilus ROV tanıtım dosyası.
+                    </p>
+                    <a href="https://drive.google.com/drive/folders/1LoAsrbIXJZn8eVaFw3ds9Mrf7ZjMMSXS?usp=sharing" download class="download-button">
+                        📄 Sponsorluk Dosyasını İndir
+                    </a>
+                </div>
             
             <div class="footer-section">
                 <h3 class="footer-heading">İletişim</h3>
