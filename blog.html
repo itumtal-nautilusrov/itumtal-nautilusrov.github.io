@@ -4,197 +4,462 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nautilus ROV | Blog</title>
-    
     <link rel="icon" href="image/logo.ico" type="image/x-icon">
-    <!-- Fontlar -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* --- GENEL SİTE STİLLERİ --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #030303; color: white; line-height: 1.2; overflow-x: hidden; font-family: 'Space Grotesk', sans-serif; }
-        
-        header { background-color: rgba(3, 3, 3, 0.8); backdrop-filter: blur(15px); padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); position: fixed; width: 100%; top: 0; z-index: 1000; }
-        .header-container { width: 100%; padding: 0 50px; display: flex; justify-content: space-between; align-items: center; }
-        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
-        .logo-img { height: 64px; width: auto; }
-        .logo-text { font-size: 1.4rem; font-weight: 700; }
-        .blue-text { color: #3498db; }
-        
-        nav ul { list-style: none; display: flex; gap: 40px; align-items: center; }
-        nav ul li { position: relative; padding: 10px 0; }
-        nav ul li a { text-decoration: none; color: #999; font-weight: 600; font-size: 15px; transition: 0.3s; }
-        nav ul li a:hover, nav ul li a.active { color: #ffffff; }
-        
-        /* Aktif Sayfa Alt Çizgisi */
-        nav ul li a.active::after {
-            content: ''; position: absolute; bottom: 4px; left: -2px; width: 110%; height: 3px; background-color: #3498db; border-radius: 50px;
+        :root {
+            --bg: #0b0e14;
+            --surface: #111520;
+            --surface2: #161b28;
+            --border: rgba(255,255,255,0.07);
+            --border-strong: rgba(255,255,255,0.13);
+            --blue: #4f8ef7;
+            --blue-dim: rgba(79,142,247,0.5);
+            --teal: #4ecdc4;
+            --text-primary: #eef0f5;
+            --text-secondary: #6a7a8e;
+            --text-dim: #3a4455;
+            --sans: 'Geist', sans-serif;
+            --serif: 'Fraunces', serif;
+            --mono: 'Geist Mono', monospace;
+            --r: 16px;
+            --r-lg: 24px;
+            --r-xl: 32px;
         }
 
-        /* Dropdown */
-        .dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: #0d0d0d; min-width: 120px; border: 1px solid #222; border-radius: 6px; display: none; padding: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 1100; }
-        .dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 20px; background: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--sans);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            width: 900px; height: 900px;
+            top: -200px; left: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse, rgba(79,142,247,0.055) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            position: fixed;
+            top: 16px; left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 48px);
+            max-width: 1100px;
+            z-index: 100;
+            padding: 0 28px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(17,21,32,0.75);
+            backdrop-filter: blur(24px) saturate(1.5);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--r-xl);
+        }
+
+        .logo-area {
+            display: flex; align-items: center; gap: 9px;
+            text-decoration: none; color: var(--text-primary);
+        }
+        .logo-img { height: 28px; border-radius: 6px; }
+        .logo-text { font-family: var(--sans); font-size: 0.95rem; font-weight: 600; letter-spacing: -0.2px; }
+        .blue-text { color: var(--blue); }
+
+        nav ul { list-style: none; display: flex; gap: 4px; align-items: center; }
+        nav ul li { position: relative; }
+        nav ul li a {
+            text-decoration: none; color: var(--text-secondary);
+            font-family: var(--sans); font-size: 0.875rem; font-weight: 500;
+            padding: 7px 14px; border-radius: 12px;
+            transition: all 0.18s; display: block;
+        }
+        nav ul li a:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+        nav ul li a.active { color: var(--text-primary); background: rgba(79,142,247,0.12); }
+
+        .dropdown-menu {
+            position: absolute; top: calc(100% + 8px); left: 50%;
+            transform: translateX(-50%);
+            background: var(--surface2);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--r); display: none;
+            padding: 6px; min-width: 130px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+        }
+        .dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 16px; }
         .dropdown:hover .dropdown-menu { display: block; }
-        .dropdown-item { display: block; width: 100%; padding: 10px 15px; text-align: center; color: #bbb; text-decoration: none; font-size: 14px; font-weight: 600; transition: 0.2s; border-radius: 4px; }
-        .dropdown-item:hover { background-color: #1a1a1a; color: #3498db; }
+        .dropdown-item {
+            display: block; padding: 9px 14px;
+            color: var(--text-secondary); text-decoration: none;
+            font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
+            border-radius: 10px; transition: 0.15s;
+        }
+        .dropdown-item:hover { background: rgba(79,142,247,0.1); color: var(--text-primary); }
+        .arrow { font-size: 9px; margin-left: 4px; opacity: 0.45; }
 
-        /* --- BLOG SAYFASI ÖZEL --- */
-        .page-content { padding-top: 150px; min-height: 80vh; }
-        .standard-container { width: 100%; padding: 0 50px; max-width: 1200px; margin: 0 auto; }
+        /* ─── MAIN / CONTAINER ─── */
+        main { position: relative; z-index: 1; }
 
-        .page-header { margin-bottom: 60px; }
-        .section-tag { color: #3498db; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
-        .page-title { font-size: 3.5rem; font-weight: 700; margin-bottom: 20px; color: #fff; }
-        .page-subtitle { color: #666; font-family: 'Inter', sans-serif; font-size: 1.1rem; }
+        .container {
+            max-width: 1220px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
 
-        /* Blog Listesi */
-        .blog-list { display: flex; flex-direction: column; gap: 30px; }
+        /* ─── PAGE CONTENT ─── */
+        .page-content {
+            padding-top: 120px;
+            padding-bottom: 100px;
+        }
 
+        /* ─── PAGE HEADER ─── */
+        .page-header {
+            padding: 60px 0 72px;
+        }
+
+        .page-eyebrow {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            color: var(--blue);
+            letter-spacing: 2.5px;
+            margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .page-eyebrow::before {
+            content: '';
+            width: 20px; height: 1px;
+            background: var(--blue-dim);
+        }
+
+        .page-title {
+            font-family: var(--serif);
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 300;
+            font-style: italic;
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .page-divider {
+            width: 48px; height: 1px;
+            background: var(--blue-dim);
+            margin-bottom: 20px;
+        }
+
+        .page-subtitle {
+            font-family: var(--sans);
+            font-size: 0.97rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        /* ─── SECTION LINE ─── */
+        .section-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin-bottom: 56px;
+        }
+
+        /* ─── BLOG LIST ─── */
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* ─── BLOG CARD ─── */
         .blog-card {
             display: grid;
-            grid-template-columns: 380px 1fr;
+            grid-template-columns: 320px 1fr;
             gap: 40px;
-            padding: 30px;
-            background-color: transparent;
-            border: 1px solid #1a1a1a; /* Belirgin Border */
-            border-radius: 20px; /* Yuvarlak Köşeler */
+            padding: 28px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
             text-decoration: none;
             align-items: center;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: border-color 0.25s, transform 0.25s, background 0.25s;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Hover Durumu: Arka plan hafif beyazlaşır ve border parlar */
+        .blog-card::before {
+            content: '';
+            position: absolute; top: 0; right: 0;
+            width: 120px; height: 120px;
+            background: radial-gradient(circle at top right, rgba(79,142,247,0.06), transparent 65%);
+            border-radius: 0 var(--r-lg) 0 0;
+            pointer-events: none;
+        }
+
         .blog-card:hover {
-            background-color: rgba(255, 255, 255, 0.03); /* Hafif beyazlaşma */
-            border-color: rgba(52, 152, 219, 0.4); /* Maviye çalan border */
-            transform: translateY(-5px); /* Hafif yukarı kalkma */
+            border-color: rgba(79,142,247,0.3);
+            background: var(--surface2);
+            transform: translateY(-3px);
         }
 
-        /* Fotoğraf Alanı */
+        /* ─── THUMB — 4:3 ratio, always preserved ─── */
         .blog-thumb-wrapper {
             width: 100%;
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 4 / 3;
             overflow: hidden;
-            border-radius: 12px;
-            background-color: #000;
+            border-radius: var(--r);
+            background: var(--surface2);
+            flex-shrink: 0;
         }
 
         .blog-thumb {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Fotoğrafı kutuya fit eder */
-            filter: grayscale(0.5);
-            transition: 0.4s ease;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.85) saturate(0.75);
+            transition: filter 0.35s, transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .blog-card:hover .blog-thumb {
-            filter: grayscale(0);
+            filter: brightness(0.95) saturate(1);
+            transform: scale(1.04);
         }
 
-        /* Metin Alanı */
-        .blog-meta { font-size: 0.8rem; color: #3498db; font-weight: 600; margin-bottom: 12px; letter-spacing: 1px; }
-        .blog-card-title { font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.3; }
-        .blog-excerpt { color: #777; font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.7; margin-bottom: 20px; }
-        .read-more { font-size: 0.9rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
-        .read-more-arrow { transition: 0.3s; color: #3498db; }
+        /* ─── CARD TEXT ─── */
+        .blog-card-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0;
+        }
+
+        .blog-meta {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--blue);
+            letter-spacing: 1.8px;
+            margin-bottom: 14px;
+        }
+
+        .blog-card-title {
+            font-family: var(--serif);
+            font-size: 1.45rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.25;
+            letter-spacing: -0.3px;
+            margin-bottom: 16px;
+        }
+
+        .blog-excerpt {
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            font-weight: 400;
+            margin-bottom: 28px;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--sans);
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .read-more-arrow {
+            color: var(--blue);
+            transition: transform 0.25s;
+            font-size: 0.9rem;
+        }
+
+        .blog-card:hover .read-more { color: var(--text-primary); }
         .blog-card:hover .read-more-arrow { transform: translateX(5px); }
 
-        /* --- FOOTER --- */
-        .footer-section { background-color: #050505; padding: 80px 0 30px 0; border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 100px; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 80px; align-items: flex-start; }
-        .footer-logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; height: 24px; margin-bottom: 25px; }
-        .footer-logo-img { height: 32px; width: auto; }
-        .footer-title { color: #fff; font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; height: 24px; display: flex; align-items: center; }
-        .footer-description { color: #666; font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; max-width: 350px; font-family: 'Inter', sans-serif; }
-        .social-icons { display: flex; gap: 12px; }
-        .social-icons a { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: 1px solid #222; border-radius: 8px; transition: 0.3s; }
-        .social-icons a:hover { border-color: #3498db; background-color: rgba(52, 152, 219, 0.05); }
-        .social-icons img { width: 20px; height: 20px; opacity: 0.6; }
-        .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 12px; }
-        .footer-links a { color: #666; text-decoration: none; font-size: 0.95rem; transition: 0.3s; font-family: 'Inter', sans-serif; }
-        .footer-links a:hover { color: #3498db; padding-left: 5px; }
-        .footer-contact { list-style: none; color: #666; font-size: 0.95rem; line-height: 1.8; font-family: 'Inter', sans-serif; }
-        .footer-bottom { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center; }
-        .footer-bottom p { color: #444; font-size: 0.85rem; font-family: 'Inter', sans-serif; }
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px 0 32px;
+            position: relative; z-index: 1;
+        }
 
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 80px;
+            margin-bottom: 56px;
+        }
+
+        .footer-logo-area {
+            display: flex; align-items: center; gap: 9px;
+            text-decoration: none; color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+        .footer-logo-img { height: 26px; border-radius: 6px; }
+
+        .footer-desc {
+            font-family: var(--sans); font-size: 0.88rem; font-weight: 400;
+            color: var(--text-dim); line-height: 1.75;
+            max-width: 300px; margin-bottom: 24px;
+        }
+
+        .social-row { display: flex; gap: 8px; }
+        .social-btn {
+            width: 34px; height: 34px;
+            border: 1px solid var(--border); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.2s; text-decoration: none;
+        }
+        .social-btn:hover { border-color: var(--border-strong); background: var(--surface); }
+        .social-btn img { width: 15px; height: 15px; opacity: 0.45; }
+
+        .footer-col-title {
+            font-family: var(--sans); font-size: 0.8rem;
+            color: var(--text-secondary); font-weight: 500;
+            margin-bottom: 18px;
+        }
+
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a {
+            color: var(--text-dim); text-decoration: none;
+            font-family: var(--sans); font-size: 0.875rem; font-weight: 400;
+            transition: color 0.18s;
+        }
+        .footer-links a:hover { color: var(--text-secondary); }
+
+        .footer-contact {
+            list-style: none; font-family: var(--mono);
+            font-size: 0.78rem; color: var(--text-dim); line-height: 2.1;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 24px; display: flex; justify-content: center;
+        }
+        .footer-bottom p {
+            font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim);
+        }
+
+        /* ─── RESPONSIVE ─── */
         @media (max-width: 1024px) {
-            .blog-card { grid-template-columns: 1fr; gap: 30px; }
-            .page-title { font-size: 2.8rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+        }
+
+        /* Tablet: kart grid → tek kolon, thumb max-width ile sınırla */
+        @media (max-width: 860px) {
+            .blog-card {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            /* Thumb hâlâ 4:3, sadece max-width ile kontrol edilir */
+            .blog-thumb-wrapper {
+                max-width: 420px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            header { top: 12px; width: calc(100% - 32px); padding: 0 20px; }
+            .container { padding: 0 24px; }
+            nav ul { gap: 2px; }
+
+            .blog-thumb-wrapper {
+                max-width: 100%;
+            }
+
+            .page-title { letter-spacing: -1px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
-        <div class="header-container">
-            <a href="index.html" class="logo-area">
-                <img src="image/logo.png" alt="Nautilus Logo" class="logo-img">
-                <span class="logo-text">Nautilus <span class="blue-text">ROV</span></span>
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Ana Sayfa</a></li>
-                    <li class="dropdown">
-                        <a href="#">Araçlar <span class="arrow">▼</span></a>
-                        <div class="dropdown-menu">
-                            <a href="sarica.html" class="dropdown-item">Sarıca</a>
-                        </div>
-                    </li>
-                    <li><a href="blog.html" class="active">Blog</a></li>
-                    <li><a href="gallery.html">Galeri</a></li>
-                    <li><a href="contact.html">İletişim</a></li>
-                </ul>
-            </nav>
-        </div>
+        <a href="index.html" class="logo-area">
+            <img src="image/logo.png" alt="Nautilus Logo" class="logo-img">
+            <span class="logo-text">Nautilus <span class="blue-text">ROV</span></span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li class="dropdown">
+                    <a href="#">Araçlar <span class="arrow">▾</span></a>
+                    <div class="dropdown-menu">
+                        <a href="sarica.html" class="dropdown-item">Sarıca</a>
+                    </div>
+                </li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="gallery.html">Galeri</a></li>
+                <li><a href="contact.html">İletişim</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <div class="page-content">
-        <div class="standard-container">
-            <div class="page-header">
-                <div class="section-tag">Nautilus ROV</div>
-                <h1 class="page-title">Blog & Deneyimler</h1>
-                <div class="section-line" style="width: 80px; height: 3px; background-color: #3498db; margin-bottom: 30px; border-radius: 2px;"></div>
-                <p class="page-subtitle">Takımımızın tecrübeleri, teknik yazılar ve yarışma günlükleri.</p>
-            </div>
+    <main>
+        <div class="page-content">
+            <div class="container">
 
-            <div class="blog-list">
-                <!-- Blog Kartı -->
-                <a href="blog-posts/pytorch-for-jetson.html" class="blog-card">
-                    <div class="blog-thumb-wrapper">
-                        <img src="image/blog-imgs/blog1/blog1.png" alt="Jetson Pytorch" class="blog-thumb">
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="blog-meta">30 KASIM 2025 · TEKNİK YAZILAR</div>
-                        <h2 class="blog-card-title">Jetson Makinenize Uygun Sürümde Pytorch Kurulumu</h2>
-                        <p class="blog-excerpt">Bu yazıda Jetson Xavier NX makinenize nasıl GPU kullanan torch ve torchvision kütüphaneleri kurabileceğinizi ve diğer jetson modellerine de nasıl uyarlanabileceği açıklanmıştır.</p>
-                        <div class="read-more">Devamını Oku <span class="read-more-arrow">→</span></div>
-                    </div>
-                </a>
+                <div class="page-header">
+                    <div class="page-eyebrow">Nautilus ROV</div>
+                    <h1 class="page-title">Blog &<br>Deneyimler</h1>
+                    <div class="page-divider"></div>
+                    <p class="page-subtitle">Takımımızın tecrübeleri, teknik yazılar ve yarışma günlükleri.</p>
+                </div>
+
+                <hr class="section-divider">
+
+                <div class="blog-list">
+
+                    <a href="blog-posts/pytorch-for-jetson.html" class="blog-card">
+                        <div class="blog-thumb-wrapper">
+                            <img src="image/blog-imgs/blog1/blog1.png" alt="Jetson Pytorch" class="blog-thumb">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="blog-meta">30 KASIM 2025 · TEKNİK YAZILAR</div>
+                            <h2 class="blog-card-title">Jetson Makinenize Uygun Sürümde Pytorch Kurulumu</h2>
+                            <p class="blog-excerpt">Bu yazıda Jetson Xavier NX makinenize nasıl GPU kullanan torch ve torchvision kütüphaneleri kurabileceğinizi ve diğer jetson modellerine de nasıl uyarlanabileceği açıklanmıştır.</p>
+                            <div class="read-more">Devamını Oku <span class="read-more-arrow">→</span></div>
+                        </div>
+                    </a>
+
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- FOOTER -->
-    <footer class="footer-section">
-        <div class="standard-container">
+    <footer>
+        <div class="container">
             <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo-area">
+                <div>
+                    <a href="index.html" class="footer-logo-area">
                         <img src="image/logo.png" alt="Nautilus Logo" class="footer-logo-img">
                         <span class="logo-text">Nautilus <span class="blue-text">ROV Takımı</span></span>
-                    </div>
-                    <p class="footer-description">İTÜ MTAL bünyesinde faaliyet gösteren insansız su altı araçları araştırma ve geliştirme topluluğu.</p>
-                    <div class="social-icons">
-                        <a href="https://www.instagram.com/nautilusrovteam/"><img src="image/bot-contacts/instagram.png" alt="Instagram"></a>
-                        <a href="https://github.com/itumtal-nautilusrov/"><img src="image/bot-contacts/github.png" alt="Github"></a>
-                        <a href="https://www.linkedin.com/company/nautilusrov/"><img src="image/bot-contacts/linkedin.png" alt="LinkedIn"></a>
-                        <a href="mailto:nautilusrovteam@gmail.com"><img src="image/bot-contacts/mail.png" alt="Mail"></a>
+                    </a>
+                    <p class="footer-desc">İTÜ MTAL bünyesinde faaliyet gösteren insansız su altı araçları araştırma ve geliştirme topluluğu.</p>
+                    <div class="social-row">
+                        <a href="https://www.instagram.com/nautilusrovteam/" class="social-btn"><img src="image/bot-contacts/instagram.png" alt="Instagram"></a>
+                        <a href="https://github.com/itumtal-nautilusrov/" class="social-btn"><img src="image/bot-contacts/github.png" alt="GitHub"></a>
+                        <a href="https://www.linkedin.com/company/nautilusrov/" class="social-btn"><img src="image/bot-contacts/linkedin.png" alt="LinkedIn"></a>
+                        <a href="mailto:nautilusrovteam@gmail.com" class="social-btn"><img src="image/bot-contacts/mail.png" alt="Mail"></a>
                     </div>
                 </div>
-                <div class="footer-col">
-                    <h4 class="footer-title">SAYFALAR</h4>
+                <div>
+                    <h4 class="footer-col-title">Sayfalar</h4>
                     <ul class="footer-links">
                         <li><a href="index.html">Ana Sayfa</a></li>
                         <li><a href="sarica.html">Araçlar — Sarıca</a></li>
@@ -203,8 +468,8 @@
                         <li><a href="contact.html">İletişim</a></li>
                     </ul>
                 </div>
-                <div class="footer-col">
-                    <h4 class="footer-title">İLETİŞİM</h4>
+                <div>
+                    <h4 class="footer-col-title">İletişim</h4>
                     <ul class="footer-contact">
                         <li>nautilusrovteam@gmail.com</li>
                         <li>Yıldız, Çırağan Cd. No:34A</li>

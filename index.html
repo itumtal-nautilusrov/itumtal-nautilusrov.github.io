@@ -4,309 +4,542 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nautilus ROV | Ana Sayfa</title>
-    
     <link rel="icon" href="image/logo.ico" type="image/x-icon">
-    <!-- Fontlar -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* --- GENEL SIFIRLAMA --- */
+        :root {
+            --bg: #0b0e14;
+            --surface: #111520;
+            --surface2: #161b28;
+            --border: rgba(255,255,255,0.07);
+            --border-strong: rgba(255,255,255,0.13);
+            --blue: #4f8ef7;
+            --blue-dim: rgba(79,142,247,0.5);
+            --teal: #4ecdc4;
+            --text-primary: #eef0f5;
+            --text-secondary: #6a7a8e;
+            --text-dim: #3a4455;
+            --sans: 'Geist', sans-serif;
+            --serif: 'Fraunces', serif;
+            --mono: 'Geist Mono', monospace;
+            --r: 16px;
+            --r-lg: 24px;
+            --r-xl: 32px;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        html { scroll-behavior: smooth; }
         body {
-            background-color: #030303; 
-            color: white;
-            line-height: 1.2;
+            background: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--sans);
             overflow-x: hidden;
-            font-family: 'Space Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- HEADER & NAVİGASYON --- */
-        header {
-            background-color: rgba(3, 3, 3, 0.8);
-            backdrop-filter: blur(15px);
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        body::before {
+            content: '';
             position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+            width: 900px; height: 900px;
+            top: -200px; left: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse, rgba(79,142,247,0.055) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .header-container {
-            width: 100%;
-            padding: 0 50px;
+        /* ─── HEADER ─── */
+        header {
+            position: fixed;
+            top: 16px; left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 48px);
+            max-width: 1100px;
+            z-index: 100;
+            padding: 0 28px;
+            height: 54px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            background: rgba(17,21,32,0.75);
+            backdrop-filter: blur(24px) saturate(1.5);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--r-xl);
         }
 
         .logo-area {
-            display: flex; align-items: center; gap: 12px;
-            text-decoration: none; color: white;
+            display: flex; align-items: center; gap: 9px;
+            text-decoration: none; color: var(--text-primary);
         }
-        .logo-img { height: 64px; width: auto; }
-        .logo-text { font-size: 1.4rem; font-weight: 700; }
-        .blue-text { color: #3498db; }
+        .logo-img { height: 28px; border-radius: 6px; }
+        .logo-text { font-family: var(--sans); font-size: 0.95rem; font-weight: 600; letter-spacing: -0.2px; }
+        .blue-text { color: var(--blue); }
 
-        nav ul { list-style: none; display: flex; gap: 40px; align-items: center; }
-        nav ul li { position: relative; padding: 10px 0; }
-        
+        nav ul { list-style: none; display: flex; gap: 4px; align-items: center; }
+        nav ul li { position: relative; }
         nav ul li a {
-            text-decoration: none; color: #999; 
-            font-weight: 600; font-size: 15px;
-            transition: 0.3s;
+            text-decoration: none; color: var(--text-secondary);
+            font-family: var(--sans); font-size: 0.875rem; font-weight: 500;
+            padding: 7px 14px; border-radius: 12px;
+            transition: all 0.18s; display: block;
         }
-        nav ul li a:hover, nav ul li a.active { color: #ffffff; }
+        nav ul li a:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+        nav ul li a.active { color: var(--text-primary); background: rgba(79,142,247,0.12); }
 
-        /* SEÇİLİ SAYFA ALTI ÇİZGİSİ (DÜMDÜZ VE PÜRÜZSÜZ) */
-        nav ul li a.active {
-            color: #ffffff;
-            position: relative;
-        }
-
-        nav ul li a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -8px; /* Yazıdan aşağı olan uzaklık */
-            left: 0;
-            width: 100%; /* Yazının tam genişliği kadar */
-            height: 3px; /* Çizgi kalınlığı */
-            background-color: #3498db; /* Senin mavi tonun */
-            border-radius: 50px; /* Uçlarının pürüzsüzce yuvarlak olması için */
-            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3); /* Çok hafif bir parlama (isteğe bağlı) */
-        }
-
-        /* --- DROPDOWN --- */
         .dropdown-menu {
-            position: absolute; top: 100%; left: 50%;
+            position: absolute; top: calc(100% + 8px); left: 50%;
             transform: translateX(-50%);
-            background-color: #0d0d0d;
-            min-width: 120px;
-            border: 1px solid #222; border-radius: 6px;
-            display: none; padding: 5px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            z-index: 1100;
+            background: var(--surface2);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--r); display: none;
+            padding: 6px; min-width: 130px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.4);
         }
-        .dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 20px; background: transparent; }
+        .dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 16px; }
         .dropdown:hover .dropdown-menu { display: block; }
-
         .dropdown-item {
-            display: block; width: 100%; padding: 10px 15px;
-            text-align: center; color: #bbb; text-decoration: none;
-            font-size: 14px; font-weight: 600; transition: 0.2s; border-radius: 4px;
+            display: block; padding: 9px 14px;
+            color: var(--text-secondary); text-decoration: none;
+            font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
+            border-radius: 10px; transition: 0.15s;
         }
-        .dropdown-item:hover { background-color: #1a1a1a; color: #3498db; }
-        .arrow { font-size: 9px; margin-left: 5px; opacity: 0.5; }
+        .dropdown-item:hover { background: rgba(79,142,247,0.1); color: var(--text-primary); }
+        .arrow { font-size: 9px; margin-left: 4px; opacity: 0.45; }
 
-        /* --- HERO (GİRİŞ) BÖLÜMÜ --- */
+        /* ─── MAIN ─── */
+        main { position: relative; z-index: 1; }
+
+        /* ─── HERO ─── */
         .hero {
-            position: relative; height: 100vh; width: 100%;
-            display: flex; align-items: center; overflow: hidden;
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
         }
-        
+
         .hero-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('image/itumtal.jpg') no-repeat center center;
-            background-size: cover; z-index: -2;
-            filter: brightness(0.3) contrast(1.1);
+            position: absolute; inset: 0;
+            background: url('image/itumtal.jpg') no-repeat center center / cover;
+            z-index: 0;
+            filter: brightness(0.22) saturate(0.8);
         }
-        
+
+        /* Vignette + top fade for header clearance */
         .hero-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, #030303 0%, transparent 30%, transparent 70%, #030303 100%);
-            z-index: -1;
+            position: absolute; inset: 0; z-index: 1;
+            background:
+                linear-gradient(to bottom, var(--bg) 0%, transparent 18%, transparent 65%, var(--bg) 100%),
+                linear-gradient(to right, rgba(11,14,20,0.6) 0%, transparent 60%);
         }
 
         .hero-inner {
-            width: 100%;
-            padding: 0 50px;
+            position: relative; z-index: 2;
+            width: 100%; max-width: 1220px;
+            margin: 0 auto; padding: 0 48px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content { max-width: 640px; }
+
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            color: var(--blue);
+            letter-spacing: 2.5px;
+            margin-bottom: 24px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .hero-eyebrow::before {
+            content: '';
+            width: 20px; height: 1px;
+            background: var(--blue-dim);
+        }
+
+        .hero-title {
+            font-family: var(--serif);
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.0;
+            letter-spacing: -2px;
+            margin-bottom: 28px;
+            font-style: italic;
+        }
+
+        .hero-title em {
+            font-style: normal;
+            color: var(--blue);
+        }
+
+        .hero-quote {
+            font-family: var(--serif);
+            font-size: 1.15rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+
+        .hero-author {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            margin-bottom: 52px;
+        }
+
+        .hero-btns { display: flex; gap: 12px; }
+
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--blue); color: #fff;
+            text-decoration: none; font-family: var(--sans);
+            font-size: 0.88rem; font-weight: 500;
+            padding: 13px 24px; border-radius: var(--r);
+            transition: all 0.2s; letter-spacing: -0.1px;
+        }
+        .btn-primary:hover { background: #6aa0f8; transform: translateY(-1px); }
+
+        .btn-outline {
+            display: inline-flex; align-items: center; gap: 8px;
+            border: 1px solid var(--border-strong);
+            color: var(--text-secondary); text-decoration: none;
+            font-family: var(--sans); font-size: 0.88rem; font-weight: 500;
+            padding: 13px 24px; border-radius: var(--r); transition: all 0.2s;
+        }
+        .btn-outline:hover { border-color: rgba(79,142,247,0.4); color: var(--text-primary); transform: translateY(-1px); }
+
+        /* Hero right side — scroll indicator */
+        .hero-side {
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.35;
+        }
+        .hero-side span {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            writing-mode: vertical-rl;
+            color: var(--text-dim);
+        }
+        .hero-side-line {
+            width: 1px; height: 60px;
+            background: linear-gradient(to bottom, var(--text-dim), transparent);
         }
 
-        @media (min-width: 1024px) {
-            .hero-inner { flex-direction: row; justify-content: space-between; align-items: center; }
-        }
-
-        .hero-content { max-width: 700px; }
-        .hero-team-name { font-size: 0.9rem; font-weight: 600; color: #3498db; letter-spacing: 3px; margin-bottom: 15px; }
-        .hero-title { font-size: clamp(2.5rem, 5vw, 3.8rem); font-weight: 700; line-height: 1.1; margin-bottom: 25px; }
-        .hero-title span { display: block; }
-        .hero-slogan { font-family: 'Inter', sans-serif; font-size: 1.3rem; font-style: italic; color: #bbb; font-weight: 500; }
-        .hero-author { font-family: 'Inter', sans-serif; font-size: 1.1rem; color: #777; font-weight: 400; margin-top: 5px; }
-
-        .hero-btns { display: flex; gap: 20px; align-items: center; }
-        .btn { padding: 16px 32px; border-radius: 10px; font-weight: 700; font-size: 16px; text-decoration: none; transition: 0.3s; display: inline-flex; align-items: center; }
-        .btn-primary { background-color: #1a3557; color: #8bb4ff; border: 1px solid rgba(52, 152, 219, 0.2); }
-        .btn-primary:hover { background-color: #244a7a; transform: translateY(-3px); }
-        .btn-outline { background-color: rgba(255, 255, 255, 0.08); color: #ccc; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .btn-outline:hover { background-color: rgba(255, 255, 255, 0.15); color: #fff; transform: translateY(-3px); }
-        .arrow-icon { margin-left: 10px; transition: 0.3s; }
-        .btn-outline:hover .arrow-icon { transform: translateX(5px); }
-
-        /* --- İÇERİK BÖLÜMLERİ --- */
-        section.content-section {
-            padding: 100px 0;
-            background-color: #030303;
-        }
-
-        .standard-container {
-            width: 100%;
-            padding: 0 50px;
-            max-width: 1400px;
+        /* ─── CONTAINER ─── */
+        .container {
+            max-width: 1220px;
             margin: 0 auto;
+            padding: 0 48px;
         }
 
-        .section-tag { color: #3498db; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase; }
-        .section-title { font-size: 2.8rem; font-weight: 700; margin-bottom: 12px; color: #fff; }
-        .section-line { width: 50px; height: 2px; background-color: #3498db; margin-bottom: 40px; }
+        /* ─── SECTION SHARED ─── */
+        .section { padding: 100px 0; position: relative; z-index: 1; }
 
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; color: #777; font-family: 'Inter', sans-serif; font-size: 1.05rem; line-height: 1.8; }
-        .competition-flex { display: flex; align-items: center; gap: 60px; }
-        .comp-text { flex: 1; }
-        .comp-text p { color: #777; font-family: 'Inter', sans-serif; font-size: 1.05rem; line-height: 1.8; }
-        .comp-image { flex: 1; }
-        .comp-image img { width: 100%; height: auto; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .section-header {
+            display: flex; align-items: center; gap: 16px;
+            margin-bottom: 56px;
+        }
+        .section-eyebrow {
+            font-family: var(--mono); font-size: 0.68rem;
+            color: var(--text-dim); letter-spacing: 2px;
+        }
+        .section-title {
+            font-family: var(--serif); font-size: 2rem;
+            font-weight: 300; letter-spacing: -0.5px;
+            color: var(--text-primary); font-style: italic;
+        }
+        .section-line { flex: 1; height: 1px; background: var(--border); }
 
-        /* --- FOOTER --- */
-        .footer-section {
-            background-color: #050505;
-            padding: 80px 0 30px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            margin-top: 50px;
+        /* ─── ABOUT ─── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+        }
+
+        .about-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 40px 36px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.25s;
+        }
+        .about-card:hover { border-color: var(--border-strong); }
+
+        .about-card::before {
+            content: '';
+            position: absolute; top: 0; right: 0;
+            width: 80px; height: 80px;
+            background: radial-gradient(circle at top right, rgba(79,142,247,0.07), transparent 65%);
+            border-radius: 0 var(--r-lg) 0 0;
+        }
+
+        .about-card p {
+            font-family: var(--sans);
+            font-size: 0.97rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* ─── COMPETITION ─── */
+        .comp-section { border-top: 1px solid var(--border); }
+
+        .comp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .comp-text-block { }
+
+        .comp-text-block p {
+            font-family: var(--sans);
+            font-size: 0.97rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .comp-image-wrap {
+            position: relative;
+        }
+
+        .comp-image-wrap img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--r-xl);
+            display: block;
+            border: 1px solid var(--border-strong);
+            filter: brightness(0.9) saturate(0.85);
+        }
+
+        /* Floating label on image */
+        .comp-badge {
+            position: absolute;
+            bottom: 20px; left: 20px;
+            background: rgba(11,14,20,0.8);
+            border: 1px solid var(--border-strong);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--text-primary);
+            backdrop-filter: blur(12px);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .comp-badge .dot {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--teal);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px 0 32px;
+            position: relative; z-index: 1;
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
             gap: 80px;
-            align-items: flex-start;
+            margin-bottom: 56px;
         }
 
-        .footer-logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; height: 24px; margin-bottom: 25px; }
-        .footer-logo-img { height: 32px; width: auto; }
-        .footer-title { color: #fff; font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; height: 24px; display: flex; align-items: center; }
-        .footer-description { color: #666; font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; max-width: 350px; font-family: 'Inter', sans-serif; }
-        
-        .social-icons { display: flex; gap: 12px; }
-        .social-icons a { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: 1px solid #222; border-radius: 8px; transition: 0.3s; }
-        .social-icons a:hover { border-color: #3498db; background-color: rgba(52, 152, 219, 0.05); }
-        .social-icons img { width: 20px; height: 20px; opacity: 0.6; transition: 0.3s; }
-        
-        .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 12px; }
-        .footer-links a { color: #666; text-decoration: none; font-size: 0.95rem; transition: 0.3s; font-family: 'Inter', sans-serif; }
-        .footer-links a:hover { color: #3498db; padding-left: 5px; }
-        
-        .footer-contact { list-style: none; color: #666; font-size: 0.95rem; line-height: 1.8; font-family: 'Inter', sans-serif; }
-        .footer-bottom { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center; }
-        .footer-bottom p { color: #444; font-size: 0.85rem; font-family: 'Inter', sans-serif; }
+        .footer-logo-area {
+            display: flex; align-items: center; gap: 9px;
+            text-decoration: none; color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+        .footer-logo-img { height: 26px; border-radius: 6px; }
 
-        @media (max-width: 900px) {
-            .about-grid, .competition-flex { flex-direction: column; grid-template-columns: 1fr; gap: 30px; }
-            .header-container, .hero-inner, .standard-container { padding: 0 30px; }
+        .footer-desc {
+            font-family: var(--sans); font-size: 0.88rem; font-weight: 400;
+            color: var(--text-dim); line-height: 1.75;
+            max-width: 300px; margin-bottom: 24px;
+        }
+
+        .social-row { display: flex; gap: 8px; }
+        .social-btn {
+            width: 34px; height: 34px;
+            border: 1px solid var(--border); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.2s; text-decoration: none;
+        }
+        .social-btn:hover { border-color: var(--border-strong); background: var(--surface); }
+        .social-btn img { width: 15px; height: 15px; opacity: 0.45; }
+
+        .footer-col-title {
+            font-family: var(--sans); font-size: 0.8rem;
+            color: var(--text-secondary); font-weight: 500;
+            margin-bottom: 18px;
+        }
+
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a {
+            color: var(--text-dim); text-decoration: none;
+            font-family: var(--sans); font-size: 0.875rem; font-weight: 400;
+            transition: color 0.18s;
+        }
+        .footer-links a:hover { color: var(--text-secondary); }
+
+        .footer-contact {
+            list-style: none; font-family: var(--mono);
+            font-size: 0.78rem; color: var(--text-dim); line-height: 2.1;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 24px; display: flex; justify-content: center;
+        }
+        .footer-bottom p {
+            font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1024px) {
+            .hero-inner { grid-template-columns: 1fr; }
+            .hero-side { display: none; }
+            .about-grid, .comp-grid { grid-template-columns: 1fr; gap: 32px; }
             .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+        }
+
+        @media (max-width: 640px) {
+            header { top: 12px; width: calc(100% - 32px); padding: 0 20px; }
+            .hero-inner, .container { padding: 0 24px; }
+            nav ul { gap: 2px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
-        <div class="header-container">
-            <a href="index.html" class="logo-area">
-                <img src="image/logo.png" alt="Nautilus Logo" class="logo-img">
-                <span class="logo-text">Nautilus <span class="blue-text">ROV</span></span>
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="active">Ana Sayfa</a></li>
-                    <li class="dropdown">
-                        <a href="#">Araçlar <span class="arrow">▼</span></a>
-                        <div class="dropdown-menu">
-                            <a href="sarica.html" class="dropdown-item">Sarıca</a>
-                        </div>
-                    </li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="gallery.html">Galeri</a></li>
-                    <li><a href="contact.html">İletişim</a></li>
-                </ul>
-            </nav>
-        </div>
+        <a href="index.html" class="logo-area">
+            <img src="image/logo.png" alt="Nautilus Logo" class="logo-img">
+            <span class="logo-text">Nautilus <span class="blue-text">ROV</span></span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Ana Sayfa</a></li>
+                <li class="dropdown">
+                    <a href="#">Araçlar <span class="arrow">▾</span></a>
+                    <div class="dropdown-menu">
+                        <a href="sarica.html" class="dropdown-item">Sarıca</a>
+                    </div>
+                </li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="gallery.html">Galeri</a></li>
+                <li><a href="contact.html">İletişim</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-inner">
-            <div class="hero-content">
-                <div class="hero-team-name">İTÜ MTAL — NAUTILUS ROV TAKIMI</div>
-                <h1 class="hero-title">
-                    <span>Sualtı Teknolojilerinde</span>
-                    <span>Yenilikçi Çözümler</span>
-                </h1>
-                <p class="hero-slogan">"Problemler bizim için proje konusu"</p>
-                <p class="hero-author">-Hüseyin Toros</p>
-            </div>
-            <div class="hero-btns">
-                <a href="contact.html" class="btn btn-primary">Daha Fazla Bilgi</a>
-                <a href="blog.html" class="btn btn-outline">Blog <span class="arrow-icon">→</span></a>
-            </div>
-        </div>
-    </section>
+    <main>
 
-    <!-- HAKKIMIZDA BÖLÜMÜ -->
-    <section class="content-section">
-        <div class="standard-container">
-            <div class="section-tag">HAKKIMIZDA</div>
-            <h2 class="section-title">Kimiz?</h2>
-            <div class="section-line"></div>
-            <div class="about-grid">
-                <p>2024 yılında İTÜ MTAL bünyesinde, yerli ve katma değeri yüksek su altı araçları geliştirmek amacıyla kurulan Nautilus ROV Takımı, öğrencilerin mühendislik, yazılım, elektronik ve mekanik alanlarında kendilerini geliştirmelerine olanak tanıyan bir Ar-Ge topluluğudur.</p>
-                <p>Takım, insansız su altı araçları (ROV) tasarımı ve üretimi üzerine çalışarak hem eğitim hem de proje geliştirme süreçlerinde deneyim kazanmayı hedefmektedir. Ulusal ve uluslararası etkinliklerde yer alarak bilgi birikimini uygulamaya dökmekte ve su altı teknolojilerine katkı sağlamayı amaçlamaktadır.</p>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <div class="hero-eyebrow">İTÜ MTAL · Nautilus ROV Takımı</div>
+                    <h1 class="hero-title">
+                        Sualtı<br>
+                        Teknolojilerinde<br>
+                        <em>Yenilikçi</em> Çözümler
+                    </h1>
+                    <p class="hero-quote">"Problemler bizim için proje konusu"</p>
+                    <p class="hero-author">— Hüseyin Toros</p>
+                    <div style="height:40px"></div>
+                    <div class="hero-btns">
+                        <a href="contact.html" class="btn-primary">Daha Fazla Bilgi</a>
+                        <a href="blog.html" class="btn-outline">Blog →</a>
+                    </div>
+                </div>
+                <div class="hero-side">
+                    <div class="hero-side-line"></div>
+                    <span>SCROLL</span>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- YARIŞMA BÖLÜMÜ -->
-    <section class="content-section">
-        <div class="standard-container">
-            <div class="competition-flex">
-                <div class="comp-text">
-                    <div class="section-tag">YARIŞMA</div>
-                    <h2 class="section-title">Teknofest 2026</h2>
+        <!-- HAKKIMIZDA -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-eyebrow">01</span>
+                    <h2 class="section-title">Kimiz?</h2>
                     <div class="section-line"></div>
-                    <p>Nautilus ROV Takımı olarak, Teknofest 2026 İnsansız Sualtı Sistemleri kategorisinde yarışmaya katılmak için yoğun bir şekilde çalışıyoruz. Bu süreçte hedefimiz, mühendislik becerilerimizi daha da geliştirmek, yenilikçi tasarımlar ortaya koymak ve su altı teknolojileri alanında ülkemizi en iyi şekilde temsil etmektir.</p>
                 </div>
-                <div class="comp-image">
-                    <img src="image/teknofest.jpg" alt="Teknofest Hazırlık">
+                <div class="about-grid">
+                    <div class="about-card">
+                        <p>2024 yılında İTÜ MTAL bünyesinde, yerli ve katma değeri yüksek su altı araçları geliştirmek amacıyla kurulan Nautilus ROV Takımı, öğrencilerin mühendislik, yazılım, elektronik ve mekanik alanlarında kendilerini geliştirmelerine olanak tanıyan bir Ar-Ge topluluğudur.</p>
+                    </div>
+                    <div class="about-card">
+                        <p>Takım, insansız su altı araçları (ROV) tasarımı ve üretimi üzerine çalışarak hem eğitim hem de proje geliştirme süreçlerinde deneyim kazanmayı hedeflemektedir. Ulusal ve uluslararası etkinliklerde yer alarak bilgi birikimini uygulamaya dökmekte ve su altı teknolojilerine katkı sağlamayı amaçlamaktadır.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- FOOTER -->
-    <footer class="footer-section">
-        <div class="standard-container">
+        <!-- YARIŞMA -->
+        <section class="section comp-section">
+            <div class="container">
+                <div class="comp-grid">
+                    <div class="comp-text-block">
+                        <div class="section-header" style="margin-bottom: 32px;">
+                            <span class="section-eyebrow">02</span>
+                            <h2 class="section-title">Teknofest 2026</h2>
+                            <div class="section-line"></div>
+                        </div>
+                        <p>Nautilus ROV Takımı olarak, Teknofest 2026 İnsansız Sualtı Sistemleri kategorisinde yarışmaya katılmak için yoğun bir şekilde çalışıyoruz. Hedefimiz mühendislik becerilerimizi geliştirmek, yenilikçi tasarımlar ortaya koymak ve su altı teknolojileri alanında ülkemizi en iyi şekilde temsil etmektir.</p>
+                    </div>
+                    <div class="comp-image-wrap">
+                        <img src="image/teknofest.jpg" alt="Teknofest Hazırlık">
+                        <div class="comp-badge">
+                            <span class="dot"></span>
+                            Teknofest 2026 · İnsansız Sualtı Sistemleri
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
             <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo-area">
+                <div>
+                    <a href="index.html" class="footer-logo-area">
                         <img src="image/logo.png" alt="Nautilus Logo" class="footer-logo-img">
                         <span class="logo-text">Nautilus <span class="blue-text">ROV Takımı</span></span>
-                    </div>
-                    <p class="footer-description">İTÜ MTAL bünyesinde faaliyet gösteren insansız su altı araçları araştırma ve geliştirme topluluğu.</p>
-                    <div class="social-icons">
-                        <a href="https://www.instagram.com/nautilusrovteam/"><img src="image/bot-contacts/instagram.png" alt="Instagram"></a>
-                        <a href="https://github.com/itumtal-nautilusrov/"><img src="image/bot-contacts/github.png" alt="GitHub"></a>
-                        <a href="https://www.linkedin.com/company/nautilusrov/"><img src="image/bot-contacts/linkedin.png" alt="LinkedIn"></a>
-                        <a href="mailto:nautilusrovteam@gmail.com"><img src="image/bot-contacts/mail.png" alt="Mail"></a>
+                    </a>
+                    <p class="footer-desc">İTÜ MTAL bünyesinde faaliyet gösteren insansız su altı araçları araştırma ve geliştirme topluluğu.</p>
+                    <div class="social-row">
+                        <a href="https://www.instagram.com/nautilusrovteam/" class="social-btn"><img src="image/bot-contacts/instagram.png" alt="Instagram"></a>
+                        <a href="https://github.com/itumtal-nautilusrov/" class="social-btn"><img src="image/bot-contacts/github.png" alt="GitHub"></a>
+                        <a href="https://www.linkedin.com/company/nautilusrov/" class="social-btn"><img src="image/bot-contacts/linkedin.png" alt="LinkedIn"></a>
+                        <a href="mailto:nautilusrovteam@gmail.com" class="social-btn"><img src="image/bot-contacts/mail.png" alt="Mail"></a>
                     </div>
                 </div>
-                <div class="footer-col">
-                    <h4 class="footer-title">SAYFALAR</h4>
+                <div>
+                    <h4 class="footer-col-title">Sayfalar</h4>
                     <ul class="footer-links">
                         <li><a href="index.html">Ana Sayfa</a></li>
                         <li><a href="sarica.html">Araçlar — Sarıca</a></li>
@@ -315,8 +548,8 @@
                         <li><a href="contact.html">İletişim</a></li>
                     </ul>
                 </div>
-                <div class="footer-col">
-                    <h4 class="footer-title">İLETİŞİM</h4>
+                <div>
+                    <h4 class="footer-col-title">İletişim</h4>
                     <ul class="footer-contact">
                         <li>nautilusrovteam@gmail.com</li>
                         <li>Yıldız, Çırağan Cd. No:34A</li>
