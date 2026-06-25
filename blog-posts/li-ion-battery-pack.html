@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jetson Pytorch Kurulumu | Nautilus ROV</title>
+    <title>Li-Ion Batarya Paketlemek | Nautilus ROV</title>
     <link rel="icon" href="../image/logo.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -94,66 +94,54 @@
         <article class="article-container">
             <a href="../blog.html" class="back-btn">← Geri Dön</a>
 
-            <div class="article-meta">30 KASIM 2025 · YAZILIM & YAPAY ZEKA</div>
-            <h1 class="article-title">Jetson Cihazları İçin PyTorch Ortam Kurulumu</h1>
+            <div class="article-meta">23 HAZİRAN 2026 · DONANIM & ELEKTRONİK</div>
+            <h1 class="article-title">Li-Ion Batarya Paketleme, BMS ve Şarj Durumu Takibi</h1>
 
-            <img src="../image/blog-imgs/blog1/blog1.png" alt="Jetson Pytorch" class="main-image">
+            <img src="../image/blog-imgs/blog2/blog2.png" alt="Lityum İyon Batarya" class="main-image">
 
             <div class="article-body">
-                <p>Bu rehberde, NVIDIA Jetson Xavier NX üzerinde GPU hızlandırma destekli PyTorch ve Torchvision kütüphanelerinin kurulum adımları detaylandırılmıştır. Dokümantasyon, diğer Jetson modelleri (Nano, Orin vb.) için de uyarlanabilir yapıdadır.</p>
+                <p>İnsansız su altı araçlarında (ROV) yüksek enerji yoğunluğu ve güvenilir güç aktarımı hayati önem taşır. Bu yazıda, kendi ihtiyacımıza yönelik Lityum-İyon hücreleri kullanarak oluşturduğumuz batarya paketinin üretimini, hücre dengeleme süreçlerini ve şarj durumu okuma algoritmalarını adım adım inceliyoruz.</p>
 
-                <h2>Sistem Gereksinimleri ve Kontrol</h2>
-                <p>Aşağıdaki görselde kullandığımız Jetson Xavier NX cihazına ait sistem özellikleri yer almaktadır. Kendi cihazınızın donanım ve JetPack uyumluluğunu terminal üzerinden doğrulayabilirsiniz.</p>
+                <h2>Hücre Seçimi</h2>
+                <p>Projelerimizde yerli üretim olan <strong>ASPİLSAN INR18650A28</strong> pillerini tercih ettik. Bu hücreler hem anlık akım deşarj kapasiteleri (C-rate) hem de stabil gerilim eğrileri ile sistem gereksinimlerimizi karşılamaktadır.</p>
+                <p><a href="https://www.aspilsan.com/cozumler/uretimini-yaptigimiz-sarj-edilebilir-lityum-iyon-pil/inr18650a28/" target="_blank" style="color:var(--blue); font-weight: 500;">ASPİLSAN Hücre Özelliklerini İnceleyin →</a></p>
 
-                <img src="../image/blog-imgs/blog1/model-info.png" alt="Model Info" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
+                <img src="../image/blog-imgs/blog2/model-info.png" alt="Model Info" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
 
-                <h3>Sanal Ortam (VENV) Yapılandırması</h3>
-                <p>Farklı projelerde bağımlılık çakışmalarını önlemek ve sistem kütüphanelerini izole etmek adına, global kurulum yerine sanal ortam (virtual environment) kullanılması şiddetle tavsiye edilir.</p>
-
-<pre><code><span class="cmd">$</span>python3 -m venv venv_adi
-<span class="cmd">$</span>source venv_adi/bin/activate</code></pre>
-
-                <h2>Sistem Bağımlılıkları ve Kurulum</h2>
-                <p>Derleme (build) süreçlerinin sorunsuz tamamlanabilmesi için öncelikle temel sistem bağımlılıklarının kurulması gerekmektedir.</p>
-
-<pre><code><span class="cmd">$</span>sudo apt-get -y update
-<span class="cmd">$</span>sudo apt-get -y install python3-pip libopenblas-dev</code></pre>
-
-                <p>Kurulum sürecini hızlandırmak adına cihaz spesifikasyonlarına uygun derlenmiş (pre-built) wheel dosyaları hazırlanmıştır. Aşağıdaki bağlantıdan indirerek doğrudan kuruluma geçebilirsiniz.</p>
-
-                <a href="https://drive.google.com/drive/folders/1uYxew3RFdcy6jQE107j4x7lP2zbly5jV?usp=sharing" class="download-btn" target="_blank">
-                    PyTorch & Torchvision Wheel (.whl) İndir
+                <h2>Hücre Dizilimi ve Tutucu (Holder) Tasarımı</h2>
+                <p>Motorlarımızın ve jetson tabanlı bilgisayarımızın toplam güç tüketimine göre <strong>5S7P (5 Seri, 7 Paralel)</strong> konfigürasyonunu belirledik. Bu yapı bize yaklaşık 18.5V nominal gerilim ve ~19.6Ah kapasite sunmaktadır.</p>
+                <p>Paketleme işleminde hücrelerin birbirine temas edip kısa devre oluşturmaması ve hava sirkülasyonunun sağlanması için özel tutucular (holder) kullandık. Hücreler 7'şerli paralel bloklar halinde üst üste dizilerek uygun nikel şeritler ile punta makinesi kullanılarak birleştirildi.</p>
+                
+                <a href="https://drive.google.com/drive/folders/1wwkChHj4QDn1sF7OpvB55AhK-J7RwXv6?usp=sharing" class="download-btn" target="_blank">
+                    Holder 3D Tasarım Dosyaları (Drive)
                 </a>
+                
+                <img src="../image/blog-imgs/blog2/holder-design.png" alt="Holder Tasarımı" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
 
-<pre><code><span class="cmd">$</span>pip install torch_wheel_adi.whl
-<span class="cmd">$</span>pip install torchvision_wheel_adi.whl</code></pre>
+                <p>Önce her bir gruptaki 7 hücre paralel olarak puntalanır, daha sonra bu bloklar kendi aralarında seri olarak (5S) bağlanarak istenen voltaja ulaşılır.</p>
 
-                <p>Kurulumun doğruluğunu ve kütüphane versiyonlarını test etmek için aşağıdaki Python betiğini çalıştırabilirsiniz:</p>
+                <img src="../image/blog-imgs/blog2/battery-design1.png" alt="Battery Design" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
 
-<pre><code>import torch
-import torchvision
+                <h2>BMS Entegrasyonu ve Güvenli Şarj Devresi</h2>
+                <p>Hücre gruplarını mekanik olarak birleştirmek yeterli değildir. Şarj/deşarj sırasında bazı hücrelerin fazla ısınıp zarar görmesini engellemek, hücreleri dengelemek (cell balancing) ve kısa devre koruması sağlamak için <strong>BMS (Battery Management System)</strong> bağlamak zorunludur.</p>
 
-print(f"PyTorch Version: {torch.__version__}")
-print(f"Torchvision Version: {torchvision.__version__}")
-print(f"CUDA Available: {torch.cuda.is_available()}")</code></pre>
+                <img src="../image/blog-imgs/blog2/bms-scheme.png" alt="BMS Connection" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
 
-                <h2>Farklı Jetson Modellerine Uyarlama</h2>
-                <p>Eğer farklı bir JetPack sürümü kullanıyorsanız, ilgili Torch wheel dosyasını doğrudan <a href="https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform-release-notes/pytorch-jetson-rel.html" target="_blank" style="color:var(--blue); font-weight: 500;">NVIDIA Resmi Dokümantasyonu</a> üzerinden temin edebilirsiniz. Unutulmamalıdır ki Torchvision derlenmeden önce PyTorch sistemde kurulu olmalıdır.</p>
+                <p>BMS devresi şemaya uygun şekilde, doğru sıralama (B-, B1, B2...) ile bağlandıktan sonra, şarj hattı oluşturulur. Sistemimizi güvenle şarj edebilmek için BMS'in C- (Charge) veya P- pinleri kullanılarak harici bir dişi jack modülü eklenir. Şarj işlemi için <strong>21V ve minimum 2A</strong> gücünde spesifik bir lityum adaptörü kullanılmalıdır.</p>
 
-<pre><code><span class="cmd">$</span>pip install torch_wheel_adi.whl</code></pre>
+                <h2>Voltaj Bölücü (Voltage Divider) ile SoC Ölçümü</h2>
+                <p>Tam şarjlı 5S bataryamız yaklaşık 21V gerilim verir. Mikrodenetleyicilerimizin (Arduino) analog giriş pinleri (ADC) bu kadar yüksek bir voltajı okuyamaz (maksimum 3.3V veya 5V okuyabilirler). Bu gerilimi mikrodenetleyicinin okuyabileceği seviyeye düşürmek için delikli pertinaks üzerinde bir <strong>Voltaj Bölücü (Voltage Divider)</strong> devresi hazırladık.</p>
 
-                <p>Torchvision kütüphanesini sisteminiz için kaynak koddan (source) derlemek istiyorsanız aşağıdaki adımları izleyebilirsiniz:</p>
+                <img src="../image/blog-imgs/blog2/voltage-divider.png" alt="SoC Measurement" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
 
-<pre><code><span class="cmd">$</span>git clone https://github.com/pytorch/vision.git
-<span class="cmd">$</span>cd torchvision
-<span class="cmd">$</span>sudo apt update
-<span class="cmd">$</span>sudo apt install -y python3-dev python3-pip libjpeg-dev libpng-dev
-<span class="cmd">$</span>pip3 install --upgrade pip setuptools wheel
-<span class="cmd">$</span>python3 setup.py bdist_wheel</code></pre>
+                <p>Hesaplamalarımıza göre bu devre için <strong>R1 direncini 100KΩ, R2 direncini ise 22KΩ</strong> olarak belirledik (bu değerlere ulaşmak için elinizdeki dirençleri seri bağlayabilirsiniz). Farklı batarya konfigürasyonlarında (3S, 4S vb.) çalışıyorsanız direnç değerlerini tekrar hesaplamalısınız.</p>
+                <p><a href="https://www.digikey.com/en/resources/conversion-calculators/conversion-calculator-voltage-divider" target="_blank" style="color:var(--blue); font-weight: 500;">Voltaj Bölücü Hesaplama Aracına Git →</a></p>
+                <p>Bu donanımsal kurulumun ardından, voltaj bölücüden okunan analog değeri yazılım tarafında bir kalibrasyon fonksiyonundan geçirerek aracın o anki Şarj Durumunu (SoC - State of Charge) gerçek zamanlı olarak takip edebiliyoruz.</p>
 
-                <p>Derleme tamamlandığında <code>./dist/</code> dizininde oluşan wheel dosyasını sisteme kurarak işlemi sonlandırabilirsiniz:</p>
-
-<pre><code><span class="cmd">$</span>pip3 install dist/torchvision-*.whl</code></pre>
+                <h2>Sonuç</h2>
+                <p>Bu Ar-Ge sürecinin sonunda; tamamen aracımızın şasisine uygun boyutlarda, 18.5V nominal gerilim ve 19.6Ah yüksek kapasite sunan, BMS ile koruma altına alınmış el yapımı bir güç ünitesi ortaya çıkardık. Bu sistem bize hem maliyet avantajı hem de operasyonel esneklik sağlamış oldu.</p>
+                
+                <img src="../image/blog-imgs/blog2/battery-final-design.png" alt="Battery Final" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
 
             </div>
         </article>
