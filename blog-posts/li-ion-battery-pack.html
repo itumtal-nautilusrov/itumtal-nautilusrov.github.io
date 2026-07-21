@@ -40,6 +40,29 @@
         
         .main-image { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--r-lg); border: 1px solid var(--border); margin-bottom: 40px; }
         
+        /* Zoom (Lightbox) Stilleri */
+        .zoomable { cursor: zoom-in; transition: opacity 0.2s; }
+        .zoomable:hover { opacity: 0.85; }
+        
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 17, 23, 0.92);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        .lightbox.active { opacity: 1; pointer-events: auto; cursor: zoom-out; }
+        .lightbox img {
+            max-width: 90%; max-height: 90vh;
+            border-radius: var(--r-lg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .lightbox.active img { transform: scale(1); }
+
         .article-body { font-size: 1rem; color: var(--text-primary); line-height: 1.8; }
         .article-body p { margin-bottom: 20px; color: var(--text-secondary); }
         .article-body h2 { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); margin: 48px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
@@ -97,7 +120,7 @@
             <div class="article-meta">23 HAZİRAN 2026 · DONANIM & ELEKTRONİK</div>
             <h1 class="article-title">Li-Ion Batarya Paketleme, BMS ve Şarj Durumu Takibi</h1>
 
-            <img src="../image/blog-imgs/blog2/blog2.png" alt="Lityum İyon Batarya" class="main-image">
+            <img src="../image/blog-imgs/blog2/blog2.png" alt="Lityum İyon Batarya" class="main-image zoomable">
 
             <div class="article-body">
                 <p>İnsansız su altı araçlarında (ROV) yüksek enerji yoğunluğu ve güvenilir güç aktarımı hayati önem taşır. Bu yazıda, kendi ihtiyacımıza yönelik Lityum-İyon hücreleri kullanarak oluşturduğumuz batarya paketinin üretimini, hücre dengeleme süreçlerini ve şarj durumu okuma algoritmalarını adım adım inceliyoruz.</p>
@@ -106,7 +129,7 @@
                 <p>Projelerimizde yerli üretim olan <strong>ASPİLSAN INR18650A28</strong> pillerini tercih ettik. Bu hücreler hem anlık akım deşarj kapasiteleri (C-rate) hem de stabil gerilim eğrileri ile sistem gereksinimlerimizi karşılamaktadır.</p>
                 <p><a href="https://www.aspilsan.com/cozumler/uretimini-yaptigimiz-sarj-edilebilir-lityum-iyon-pil/inr18650a28/" target="_blank" style="color:var(--blue); font-weight: 500;">ASPİLSAN Hücre Özelliklerini İnceleyin →</a></p>
 
-                <img src="../image/blog-imgs/blog2/model-info.png" alt="Model Info" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
+                <img src="../image/blog-imgs/blog2/model-info.png" alt="Model Info" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;" class="zoomable">
 
                 <h2>Hücre Dizilimi ve Tutucu (Holder) Tasarımı</h2>
                 <p>Motorlarımızın ve jetson tabanlı bilgisayarımızın toplam güç tüketimine göre <strong>5S7P (5 Seri, 7 Paralel)</strong> konfigürasyonunu belirledik. Bu yapı bize yaklaşık 18.5V nominal gerilim ve ~19.6Ah kapasite sunmaktadır.</p>
@@ -116,23 +139,23 @@
                     Holder 3D Tasarım Dosyaları (Drive)
                 </a>
                 
-                <img src="../image/blog-imgs/blog2/holder-design.png" alt="Holder Tasarımı" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
+                <img src="../image/blog-imgs/blog2/holder-design.png" alt="Holder Tasarımı" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;" class="zoomable">
 
                 <p>Önce her bir gruptaki 7 hücre paralel olarak puntalanır, daha sonra bu bloklar kendi aralarında seri olarak (5S) bağlanarak istenen voltaja ulaşılır.</p>
 
-                <img src="../image/blog-imgs/blog2/battery-design1.png" alt="Battery Design" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
+                <img src="../image/blog-imgs/blog2/battery-design1.png" alt="Battery Design" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;" class="zoomable">
 
                 <h2>BMS Entegrasyonu ve Güvenli Şarj Devresi</h2>
                 <p>Hücre gruplarını mekanik olarak birleştirmek yeterli değildir. Şarj/deşarj sırasında bazı hücrelerin fazla ısınıp zarar görmesini engellemek, hücreleri dengelemek (cell balancing) ve kısa devre koruması sağlamak için <strong>BMS (Battery Management System)</strong> bağlamak zorunludur.</p>
 
-                <img src="../image/blog-imgs/blog2/bms-scheme.png" alt="BMS Connection" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
+                <img src="../image/blog-imgs/blog2/bms-scheme.png" alt="BMS Connection" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;" class="zoomable">
 
                 <p>BMS devresi şemaya uygun şekilde, doğru sıralama (B-, B1, B2...) ile bağlandıktan sonra, şarj hattı oluşturulur. Sistemimizi güvenle şarj edebilmek için BMS'in C- (Charge) veya P- pinleri kullanılarak harici bir dişi jack modülü eklenir. Şarj işlemi için <strong>21V ve minimum 2A</strong> gücünde spesifik bir lityum adaptörü kullanılmalıdır.</p>
 
                 <h2>Voltaj Bölücü (Voltage Divider) ile SoC Ölçümü</h2>
                 <p>Tam şarjlı 5S bataryamız yaklaşık 21V gerilim verir. Mikrodenetleyicilerimizin (Arduino) analog giriş pinleri (ADC) bu kadar yüksek bir voltajı okuyamaz (maksimum 3.3V veya 5V okuyabilirler). Bu gerilimi mikrodenetleyicinin okuyabileceği seviyeye düşürmek için delikli pertinaks üzerinde bir <strong>Voltaj Bölücü (Voltage Divider)</strong> devresi hazırladık.</p>
 
-                <img src="../image/blog-imgs/blog2/voltage-divider.png" alt="SoC Measurement" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
+                <img src="../image/blog-imgs/blog2/voltage-divider.png" alt="SoC Measurement" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;" class="zoomable">
 
                 <p>Hesaplamalarımıza göre bu devre için <strong>R1 direncini 100KΩ, R2 direncini ise 22KΩ</strong> olarak belirledik (bu değerlere ulaşmak için elinizdeki dirençleri seri bağlayabilirsiniz). Farklı batarya konfigürasyonlarında (3S, 4S vb.) çalışıyorsanız direnç değerlerini tekrar hesaplamalısınız.</p>
                 <p><a href="https://www.digikey.com/en/resources/conversion-calculators/conversion-calculator-voltage-divider" target="_blank" style="color:var(--blue); font-weight: 500;">Voltaj Bölücü Hesaplama Aracına Git →</a></p>
@@ -141,7 +164,7 @@
                 <h2>Sonuç</h2>
                 <p>Bu Ar-Ge sürecinin sonunda; tamamen aracımızın şasisine uygun boyutlarda, 18.5V nominal gerilim ve 19.6Ah yüksek kapasite sunan, BMS ile koruma altına alınmış el yapımı bir güç ünitesi ortaya çıkardık. Bu sistem bize hem maliyet avantajı hem de operasyonel esneklik sağlamış oldu.</p>
                 
-                <img src="../image/blog-imgs/blog2/battery-final-design.png" alt="Battery Final" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;">
+                <img src="../image/blog-imgs/blog2/battery-final-design.png" alt="Battery Final" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;" class="zoomable">
 
             </div>
         </article>
@@ -188,6 +211,31 @@
             <div class="footer-bottom">© 2026 Nautilus ROV Takımı. Tüm hakları saklıdır.</div>
         </div>
     </footer>
+
+    <!-- Lightbox Konteyneri -->
+    <div id="lightbox" class="lightbox">
+        <img id="lightbox-img" src="" alt="Zoomlanmış Görsel">
+    </div>
+
+    <!-- Lightbox Scripti -->
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const images = document.querySelectorAll('.zoomable');
+
+        // Resimlere tıklanınca lightbox'ı aç
+        images.forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            });
+        });
+
+        // Lightbox'a (arkaplana veya resme) tıklanınca kapat
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+    </script>
 
 </body>
 </html>

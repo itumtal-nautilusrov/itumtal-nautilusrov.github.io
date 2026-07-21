@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jetson Pytorch Kurulumu | Nautilus ROV</title>
+    <title>ESC'ye Çift Yönlü Firmware Flaşlama | Nautilus ROV</title>
     <link rel="icon" href="../image/logo.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -67,11 +67,16 @@
         .article-body p { margin-bottom: 20px; color: var(--text-secondary); }
         .article-body h2 { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); margin: 48px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
         .article-body h3 { font-size: 1.1rem; color: var(--text-primary); font-weight: 600; margin: 32px 0 16px; }
+        .article-body ul { margin-bottom: 20px; padding-left: 20px; color: var(--text-secondary); }
+        .article-body li { margin-bottom: 8px; }
+        .article-body strong { color: var(--text-primary); }
         
         pre { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; overflow-x: auto; margin: 20px 0; }
         pre code { font-family: monospace; font-size: 0.85rem; color: var(--text-primary); line-height: 1.5; }
-        p code { font-family: monospace; font-size: 0.85rem; color: var(--text-primary); background: var(--surface); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border); }
-        .cmd { color: var(--blue); margin-right: 8px; user-select: none; }
+        p code, li code { font-family: monospace; font-size: 0.85rem; color: var(--text-primary); background: var(--surface); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border); }
+        
+        blockquote { border-left: 4px solid var(--blue); padding: 16px 20px; background: rgba(88, 166, 255, 0.1); border-radius: 0 var(--r) var(--r) 0; margin: 24px 0; }
+        blockquote p { margin: 0; color: var(--text-primary); font-weight: 500; }
 
         .download-btn { display: inline-flex; align-items: center; justify-content: center; background: var(--surface); color: var(--text-primary); padding: 12px 24px; border-radius: var(--r); border: 1px solid var(--border); font-size: 0.9rem; font-weight: 600; margin: 16px 0; transition: 0.2s; }
         .download-btn:hover { border-color: var(--blue); color: var(--blue); }
@@ -117,67 +122,65 @@
         <article class="article-container">
             <a href="../blog.html" class="back-btn">← Geri Dön</a>
 
-            <div class="article-meta">30 KASIM 2025 · YAZILIM & YAPAY ZEKA</div>
-            <h1 class="article-title">Jetson Cihazları İçin PyTorch Ortam Kurulumu</h1>
+            <div class="article-meta">22 TEMMUZ 2026 · DONANIM & YAZILIM</div>
+            <h1 class="article-title">ESC'ye Çift Yönlü Firmware Flaşlama</h1>
 
-            <img src="../image/blog-imgs/blog1/blog1.png" alt="Jetson Pytorch" class="main-image zoomable">
+            <img src="../image/blog-imgs/blog3/blog3.png" alt="ESC ve Arduino Bağlantısı" class="main-image zoomable">
 
             <div class="article-body">
-                <p>Bu rehberde, NVIDIA Jetson Xavier NX üzerinde GPU hızlandırma destekli PyTorch ve Torchvision kütüphanelerinin kurulum adımları detaylandırılmıştır. Dokümantasyon, diğer Jetson modelleri (Nano, Orin vb.) için de uyarlanabilir yapıdadır.</p>
+                <p>İnsansız su altı araçlarında (ROV) iticilerin hem ileri hem de geri yönde çalışabilmesi, manevra kabiliyeti ve hassas pozisyonlama için zorunludur. Ancak piyasada standart olarak satılan uygun fiyatlı drone ESC'leri fabrikadan <strong>tek yönlü</strong> olarak çıkar. Bu yazıda, Sarıca aracımızda kullandığımız bu ESC'lere Arduino Uno aracılığıyla nasıl çift yönlü (Bidirectional/3D) yazılım atabileceğinizi adım adım anlatıyoruz.</p>
 
-                <h2>Sistem Gereksinimleri ve Kontrol</h2>
-                <p>Aşağıdaki görselde kullandığımız Jetson Xavier NX cihazına ait sistem özellikleri yer almaktadır. Kendi cihazınızın donanım ve JetPack uyumluluğunu terminal üzerinden doğrulayabilirsiniz.</p>
+                <h2>1. Hazırlık ve Linux Ortamında Wine Ayarları</h2>
+                <p>Bu işlem için klasik <strong>BLHeliSuite</strong> yazılımını (.exe) kullanacağız. Eğer Linux (Ubuntu/Debian) ortamında çalışıyorsanız, yazılımı Wine üzerinden sorunsuz çalıştırabilirsiniz. Arduino'nun bağlı olduğu portu Wine'a bir COM portu olarak tanıtmak için terminalde şu komutları sırasıyla çalıştırmanız yeterlidir:</p>
 
-                <img src="../image/blog-imgs/blog1/model-info.png" alt="Model Info" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;" class="zoomable">
+<pre><code># Arduino portunu (genellikle ttyACM0) Wine'a com1 olarak bağla
+cd ~/.wine/dosdevices
+rm com1
+ln -s /dev/ttyACM0 com1
 
-                <h3>Sanal Ortam (VENV) Yapılandırması</h3>
-                <p>Farklı projelerde bağımlılık çakışmalarını önlemek ve sistem kütüphanelerini izole etmek adına, global kurulum yerine sanal ortam (virtual environment) kullanılması şiddetle tavsiye edilir.</p>
+# BLHeliSuite'i çalıştır
+wine BLHeliSuite.exe</code></pre>
 
-<pre><code><span class="cmd">$</span>python3 -m venv venv_adi
-<span class="cmd">$</span>source venv_adi/bin/activate</code></pre>
+                <h2>2. Arduino'yu Programlayıcıya Dönüştürme</h2>
+                <p>BLHeliSuite açıldığında, yazılımın alt kısmındaki Port menüsünden <strong>COM1</strong>'i seçin. Sağ üst taraftaki menüden <strong>Make Interfaces</strong> sekmesine tıklayın.</p>
+                
+                <img src="../image/blog-imgs/blog3/blhelisuite1.png" alt="Make Interfaces" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;" class="zoomable">
 
-                <h2>Sistem Bağımlılıkları ve Kurulum</h2>
-                <p>Derleme (build) süreçlerinin sorunsuz tamamlanabilmesi için öncelikle temel sistem bağımlılıklarının kurulması gerekmektedir.</p>
+                <p>Sağ taraftaki <em>Make Arduino Interface Boards</em> bölümünden kartınızı (Arduino Uno) seçin ve <strong>ArduinoUSBLinker (SK Bootloader)</strong> butonuna tıklayarak gerekli köprü yazılımını Uno'nuza yükleyin. Artık Arduino'nuz bir 1-Wire arayüzü olarak çalışmaya hazır.</p>
 
-<pre><code><span class="cmd">$</span>sudo apt-get -y update
-<span class="cmd">$</span>sudo apt-get -y install python3-pip libopenblas-dev</code></pre>
+                <h2>3. ESC ve Arduino Bağlantısı</h2>
+                <p>ESC'yi flashlamak için servo (sinyal) kablosu üzerinden Arduino'ya bağlamamız gerekiyor. Bu işlemde <strong>1-Wire</strong> (Tek Kablo) protokolünü kullanacağız.</p>
+                
+                <ul>
+                    <li><strong>Siyah / Kahverengi Kablo (GND):</strong> Arduino'nun <strong>GND</strong> pinine.</li>
+                    <li><strong>Sarı / Beyaz Kablo (Sinyal):</strong> Arduino'nun <strong>D11</strong> pinine.</li>
+                    <li><strong>Kırmızı Kablo (5V):</strong> <strong>BOŞTA (Eğer BEC varsa).</strong> Arduino'ya bağlamayın!</li>
+                </ul>
 
-                <p>Kurulum sürecini hızlandırmak adına cihaz spesifikasyonlarına uygun derlenmiş (pre-built) wheel dosyaları hazırlanmıştır. Aşağıdaki bağlantıdan indirerek doğrudan kuruluma geçebilirsiniz.</p>
+                <blockquote>
+                    <p>Güvenlik Uyarısı: Olası kazaları önlemek için işlem sırasında motorun pervanelerinden uzak durun. Ayrıca, veri iletişiminin başlayabilmesi için tüm kabloları bağladıktan sonra ESC'ye batarya üzerinden güç vererek cihazı aktifleştirmeniz gerekmektedir.</p>
+                </blockquote>
 
-                <a href="https://drive.google.com/drive/folders/1uYxew3RFdcy6jQE107j4x7lP2zbly5jV?usp=sharing" class="download-btn" target="_blank">
-                    PyTorch & Torchvision Wheel (.whl) İndir
-                </a>
+                <h2>4. Ayarları Okuma ve Çift Yönlü Moda Geçiş</h2>
+                <p>Bağlantılar tamamlandıktan sonra BLHeliSuite ana menüsüne dönün. Üst sekmedeki <strong>Select ATMEL / SILABS Interface</strong> menüsünden <code>ATMEL SK Bootloader (Arduino USB Linker)</code> seçeneğini işaretleyin.</p>
+                
+                <img src="../image/blog-imgs/blog3/blhelisuite2.png" alt="Bootloader Info" style="width: 100%; border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 20px;" class="zoomable">
 
-<pre><code><span class="cmd">$</span>pip install torch_wheel_adi.whl
-<span class="cmd">$</span>pip install torchvision_wheel_adi.whl</code></pre>
+                <p>Sırasıyla aşağıdaki adımları izleyin:</p>
+                <ol style="padding-left: 20px; color: var(--text-secondary); margin-bottom: 20px;">
+                    <li>Alt kısımdaki <strong>Connect</strong> butonuna tıklayın.</li>
+                    <li>Hemen yanındaki <strong>Read Setup</strong> butonuna basın. (Ekrana ESC'nin mevcut parametreleri dökülecektir).</li>
+                    <li>Parametre listesindeki <strong>Motor Direction</strong> (veya PWM Mode) ayarını <strong>Bidirectional</strong> olarak değiştirin.</li>
+                    <li>Son olarak <strong>Write Setup</strong> butonuna basarak ayarları kalıcı olarak ESC'ye yazdırın. İşlem başarıyla tamamlandığında ESC'den bir onay sesi duyacaksınız.</li>
+                </ol>
 
-                <p>Kurulumun doğruluğunu ve kütüphane versiyonlarını test etmek için aşağıdaki Python betiğini çalıştırabilirsiniz:</p>
-
-<pre><code>import torch
-import torchvision
-
-print(f"PyTorch Version: {torch.__version__}")
-print(f"Torchvision Version: {torchvision.__version__}")
-print(f"CUDA Available: {torch.cuda.is_available()}")</code></pre>
-
-                <h2>Farklı Jetson Modellerine Uyarlama</h2>
-                <p>Eğer farklı bir JetPack sürümü kullanıyorsanız, ilgili Torch wheel dosyasını doğrudan <a href="https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform-release-notes/pytorch-jetson-rel.html" target="_blank" style="color:var(--blue); font-weight: 500;">NVIDIA Resmi Dokümantasyonu</a> üzerinden temin edebilirsiniz. Unutulmamalıdır ki Torchvision derlenmeden önce PyTorch sistemde kurulu olmalıdır.</p>
-
-<pre><code><span class="cmd">$</span>pip install torch_wheel_adi.whl</code></pre>
-
-                <p>Torchvision kütüphanesini sisteminiz için kaynak koddan (source) derlemek istiyorsanız aşağıdaki adımları izleyebilirsiniz:</p>
-
-<pre><code><span class="cmd">$</span>git clone https://github.com/pytorch/vision.git
-<span class="cmd">$</span>cd torchvision
-<span class="cmd">$</span>sudo apt update
-<span class="cmd">$</span>sudo apt install -y python3-dev python3-pip libjpeg-dev libpng-dev
-<span class="cmd">$</span>pip3 install --upgrade pip setuptools wheel
-<span class="cmd">$</span>python3 setup.py bdist_wheel</code></pre>
-
-                <p>Derleme tamamlandığında <code>./dist/</code> dizininde oluşan wheel dosyasını sisteme kurarak işlemi sonlandırabilirsiniz:</p>
-
-<pre><code><span class="cmd">$</span>pip3 install dist/torchvision-*.whl</code></pre>
-
+                <h2>Sonuç: Yeni PWM Değerleri</h2>
+                <p>Tebrikler! ESC'niz artık çift yönlü çalışıyor. Yazılım tarafında aracınızın motorlarını kontrol ederken PWM aralığınız şu şekilde değişmiş oldu:</p>
+                <ul>
+                    <li><strong>1500us:</strong> Tamamen durma noktası</li>
+                    <li><strong>1500us - 2000us arası:</strong> İleri yönde hızlanma</li>
+                    <li><strong>1500us - 1000us arası:</strong> Geri yönde hızlanma</li>
+                </ul>
             </div>
         </article>
     </main>
@@ -224,18 +227,15 @@ print(f"CUDA Available: {torch.cuda.is_available()}")</code></pre>
         </div>
     </footer>
 
-    <!-- Lightbox Konteyneri -->
     <div id="lightbox" class="lightbox">
         <img id="lightbox-img" src="" alt="Zoomlanmış Görsel">
     </div>
 
-    <!-- Lightbox Scripti -->
     <script>
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const images = document.querySelectorAll('.zoomable');
 
-        // Resimlere tıklanınca lightbox'ı aç
         images.forEach(img => {
             img.addEventListener('click', () => {
                 lightboxImg.src = img.src;
@@ -243,7 +243,6 @@ print(f"CUDA Available: {torch.cuda.is_available()}")</code></pre>
             });
         });
 
-        // Lightbox'a (arkaplana veya resme) tıklanınca kapat
         lightbox.addEventListener('click', () => {
             lightbox.classList.remove('active');
         });
