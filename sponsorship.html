@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İletişim | Nautilus ROV</title>
-    <meta name="description" content="Nautilus ROV Takımı ile iletişime geçin: e-posta, adres ve sponsorluk bilgileri.">
+    <title>Sponsorluk | Nautilus ROV</title>
+    <meta name="description" content="Nautilus ROV Takımı sponsorluk ve iş birliği bilgileri.">
     <link rel="icon" href="image/favicon.png" type="image/png" media="(prefers-color-scheme: light)">
     <link rel="icon" href="image/favicon-dark.png" type="image/png" media="(prefers-color-scheme: dark)">
     <link rel="icon" href="image/logo.ico" type="image/x-icon" sizes="any">
@@ -45,8 +45,8 @@
                     </li>
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="gallery.html">Galeri</a></li>
-                    <li><a href="sponsorship.html" class="nav-cta">Sponsorluk</a></li>
-                    <li><a href="contact.html" class="active" aria-current="page">İletişim</a></li>
+                    <li><a href="sponsorship.html" class="nav-cta active" aria-current="page">Sponsorluk</a></li>
+                    <li><a href="contact.html">İletişim</a></li>
                 </ul>
             </nav>
             <button class="icon-btn menu-toggle" type="button" aria-label="Menüyü aç" aria-controls="site-nav" aria-expanded="false">
@@ -56,33 +56,41 @@
     </header>
     </div>
 
-    <main class="contact-page">
-        <div class="wrap contact-fit">
-            <div class="map">
-                <iframe src="https://www.google.com/maps/embed?origin=mfe&amp;pb=!1m3!2m1!1sİTÜ+Mesleki+ve+Teknik+Anadolu+Lisesi,+Zeytinoğlu+Cad.+No:80,+Etiler,+Beşiktaş,+İstanbul!6i16" title="İTÜ MTAL konumu" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    <main>
+        <section class="sheet">
+            <div class="wrap">
+                <h1>İhtiyaçlarımız</h1>
+                <button type="button" class="sheet-img" data-full="image/sponsorship.png" data-caption="Sponsorluk paketleri" aria-label="Sponsorluk paketlerini büyüt">
+                    <img src="image/sponsorship.png" alt="Sponsorluk paketleri: elmas 50 bin ve üzeri, platin 40 bin, altın 30 bin, gümüş 20 bin, bronz 10 bin ve malzeme desteği. Paketler sosyal medyada teşekkür paylaşımı, şirket logosunun takım portföyüne ve web sitesine eklenmesi ile yarışma formasında sırt sponsorluğunu kapsar; göğüs sponsorluğu yalnızca elmas pakette vardır.">
+                </button>
             </div>
+        </section>
 
-            <section class="form">
-                <h1>Bize ulaşın</h1>
-                <p>Formu doldurarak ekibimize doğrudan ulaşabilirsiniz. Mesajlarınıza en kısa sürede dönüş sağlayacağız.</p>
-                <form action="https://formspree.io/f/mlgyjvlz" method="POST">
-                        <div class="field">
-                            <label for="f-name">Adınız ve soyadınız</label>
-                            <input id="f-name" type="text" name="name" placeholder="Örn: Ali Veli" autocomplete="name" required>
-                        </div>
-                        <div class="field">
-                            <label for="f-email">E-posta adresiniz</label>
-                            <input id="f-email" type="email" name="email" placeholder="ornek@mail.com" autocomplete="email" required>
-                        </div>
-                        <div class="field">
-                            <label for="f-msg">Mesajınız</label>
-                            <textarea id="f-msg" name="message" placeholder="Size nasıl yardımcı olabiliriz?" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Mesajı gönder</button>
-                    </form>
-            </section>
-        </div>
+        <section class="row">
+            <div class="wrap">
+                <div class="row-head"><div class="row-head-inner"><h2>Destek olun</h2></div></div>
+                <div class="row-body">
+                    <p>Ekip olarak sponsorluk ve iş birliği fırsatlarına açığız. Sponsorluk dosyalarımıza aşağıdaki bağlantıdan göz atabilirsiniz.</p>
+                    <div class="actions">
+                        <a href="https://drive.google.com/drive/u/0/folders/1LoAsrbIXJZn8eVaFw3ds9Mrf7ZjMMSXS" target="_blank" rel="noopener" class="btn btn-primary">Sponsorluk dosyasını aç</a>
+                        <a href="contact.html" class="btn btn-plain">Bizimle iletişime geçin</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
+
+
+    <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Fotoğraf görüntüleyici" hidden>
+        <button type="button" class="viewer-btn viewer-close" aria-label="Kapat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+        <button type="button" class="viewer-btn viewer-prev" aria-label="Önceki fotoğraf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <figure class="viewer-figure">
+            <img class="viewer-img" src="" alt="">
+            <figcaption class="viewer-caption"></figcaption>
+        </figure>
+        <button type="button" class="viewer-btn viewer-next" aria-label="Sonraki fotoğraf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+    </div>
 
     <footer>
         <div class="wrap foot">
@@ -115,5 +123,6 @@
         <div class="wrap foot-bottom">© <span data-year>2026</span> Nautilus ROV Takımı. Tüm hakları saklıdır.</div>
     </footer>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/viewer.js"></script>
 </body>
 </html>
