@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nautilus ROV</title>
+    <meta name="description" content="Nautilus ROV Takımı tanıtım sayfası.">
+    <!-- Standalone page: shared by direct link only, not linked from the site nav. -->
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="image/favicon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260917">
+    <style>
+        body { min-height: 100vh; display: flex; flex-direction: column; }
+        main { flex: 1; }
+        .back-link { font-size: 1.05rem; font-weight: 700; color: var(--ink-soft); }
+        .back-link:hover { color: var(--ink); }
+
+        .pitch-hero { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: center; padding-top: 72px; padding-bottom: 104px; border-bottom: 1px solid var(--rule); }
+        .pitch-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; }
+        .pitch-hero h1 { font-size: clamp(2.1rem, 4.2vw, 3.3rem); font-weight: 700; font-stretch: 108%; letter-spacing: -0.025em; max-width: 18ch; }
+        .pitch-hero .lede { font-size: 1.2rem; line-height: 1.6; color: var(--ink-soft); max-width: 44ch; margin: 24px 0 36px; }
+
+        /* Reserved slot for the promo video. Replace .video-slot's contents with the embed. */
+        .video-slot { position: relative; aspect-ratio: 16 / 9; border: 1px dashed var(--ink-soft); border-radius: 4px; background: var(--surface); display: flex; align-items: center; justify-content: center; font-family: var(--display); color: var(--ink-soft); }
+        .video-slot iframe, .video-slot video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 4px; }
+
+        .tiers { width: 100%; border-collapse: collapse; font-family: var(--display); font-size: 0.95rem; }
+        .tiers th, .tiers td { padding: 14px 8px; border-top: 1px solid var(--rule); text-align: center; vertical-align: middle; }
+        .tiers thead th { font-weight: 600; font-size: 0.85rem; color: var(--ink-soft); vertical-align: bottom; border-top: none; }
+        .tiers tbody th { text-align: left; font-weight: 650; white-space: nowrap; padding-left: 0; }
+        .tiers tbody th span { display: block; font-weight: 400; color: var(--ink-soft); font-size: 0.85rem; }
+        .tiers tbody tr:last-child > * { border-bottom: 1px solid var(--rule); }
+        .tiers td { color: var(--current); font-size: 1.1rem; }
+        .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        .tiers-scroll { overflow-x: auto; }
+        .tiers-scroll table { min-width: 560px; }
+
+        @media (max-width: 960px) {
+            .pitch-hero { grid-template-columns: 1fr; gap: 32px; padding-top: 40px; padding-bottom: 56px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="masthead">
+        <div class="topbar">
+            <ul class="topbar-info">
+                <li class="topbar-address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span>Etiler Mah. Zeytinoğlu Cad. No: 80, Beşiktaş / İstanbul</span></li>
+                <li><a href="mailto:nautilusrovteam@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span>nautilusrovteam@gmail.com</span></a></li>
+            </ul>
+            <ul class="topbar-social">
+                <li class="topbar-label">Bizi takip edin</li>
+                <li><a href="https://linkedin.com/company/nautilusrov" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M7.5 10.5V17"></path><path d="M7.5 7.3v.01"></path><path d="M11.5 17v-6.5"></path><path d="M11.5 13.8a3 3 0 0 1 6 0V17"></path></svg></a></li>
+                <li><a href="https://instagram.com/nautilusrovteam" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a></li>
+                <li><a href="https://github.com/itumtal-nautilusrov" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></li>
+            </ul>
+        </div>
+    <header>
+        <a href="index.html" class="logo" aria-label="Nautilus ROV ana sayfa">
+            <img class="logo-img" src="image/logo-dark.png" alt="Nautilus ROV logosu">
+            <span class="wordmark">Nautilus ROV</span>
+        </a>
+        <a href="index.html" class="back-link">Ana sayfaya dön</a>
+    </header>
+    </div>
+
+    <main>
+        <section class="wrap pitch-hero">
+            <figure class="pitch-photo">
+                <img src="image/sarica_bosphorus.jpeg" alt="Sarıca İstanbul Boğazı'nda">
+            </figure>
+            <div>
+                <h1>Türkiye'nin sualtı mühendislerini birlikte yetiştirelim.</h1>
+                <p class="lede">Nautilus ROV, İTÜ MTAL öğrencilerinden oluşan bir sualtı robotiği takımı. Otonom sualtı aracımız Sarıca'yı kendimiz tasarlayıp ürettik. Bir sonraki adım için sizin desteğinize ihtiyacımız var.</p>
+                <div class="actions">
+                    <a href="https://drive.google.com/drive/u/0/folders/1LoAsrbIXJZn8eVaFw3ds9Mrf7ZjMMSXS" target="_blank" rel="noopener" class="btn btn-primary">Sponsorluk dosyasını aç</a>
+                    <a href="contact.html" class="btn btn-plain">Bize yazın</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="row">
+            <div class="wrap">
+                <div class="row-head"><div class="row-head-inner">
+                    <h2>Tanıtım videosu</h2>
+                    <p>Takımı ve Sarıca'yı yakından tanıyın.</p>
+                </div></div>
+                <div class="row-body">
+                    <div class="video-slot">Video yakında burada</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="row">
+            <div class="wrap">
+                <div class="row-head"><div class="row-head-inner"><h2>Neden Nautilus?</h2></div></div>
+                <div class="row-body">
+                    <div>
+                        <h3>Gerçek bir mühendislik projesi</h3>
+                        <p>Sarıca kâğıt üzerinde kalmadı. Batarya paketinden motor sürücülerinin yazılımına, görüntü işlemeden otonom kontrole kadar her parçasını takım olarak geliştirdik ve suya indirdik.</p>
+                    </div>
+                    <div>
+                        <h3>Yerli teknolojiye yatırım</h3>
+                        <p>Amacımız sadece yarışmalara katılmak değil. Deniz alanında ulusal teknoloji hamlesine güçlü bir temel oluşturmak ve bu alanda çalışacak yeni mühendisler yetiştirmek istiyoruz.</p>
+                    </div>
+                    <div>
+                        <h3>Görünür bir iş birliği</h3>
+                        <p>Logonuz yarışma formamızda, web sitemizde ve takım portföyümüzde yer alır. Desteğiniz sosyal medya hesaplarımızda duyurulur.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="row">
+            <div class="wrap">
+                <div class="row-head"><div class="row-head-inner">
+                    <h2>Sarıca</h2>
+                    <p>Takımımızın otonom sualtı aracı.</p>
+                </div></div>
+                <div class="row-body">
+                    <table class="specs">
+                        <tr><th scope="row">Maksimum iş derinliği</th><td>50 m+</td></tr>
+                        <tr><th scope="row">Hareket yeteneği</th><td>6 DOF</td></tr>
+                        <tr><th scope="row">Yapay zeka</th><td>VSLAM, güdüm, nesne tanıma, navigasyon</td></tr>
+                        <tr><th scope="row">Görev süresi</th><td>5S 19.6 Ah (~40dk)</td></tr>
+                        <tr><th scope="row">Otonomi</th><td>Gazebo ile test edilmiş PID, dead reckoning ve station keeping algoritmaları</td></tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="row">
+            <div class="wrap">
+                <div class="row-head"><div class="row-head-inner"><h2>Desteğiniz nereye gider?</h2></div></div>
+                <div class="row-body">
+                    <ul class="plain-list">
+                        <li>İtici motorlar, motor sürücüleri ve elektronik kartlar</li>
+                        <li>Batarya ve güç sistemi</li>
+                        <li>Yapay zeka için işlem birimleri</li>
+                        <li>Üretim, test ve yarışma giderleri</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="row">
+            <div class="wrap">
+                <div class="row-head"><div class="row-head-inner">
+                    <h2>Sponsorluk paketleri</h2>
+                    <p>Her paket ilk dört hakkı kapsar. Göğüs sponsorluğu yalnızca Elmas pakette var.</p>
+                </div></div>
+                <div class="row-body">
+                    <div class="tiers-scroll">
+                        <table class="tiers">
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                    <th scope="col">Sosyal medyada teşekkür</th>
+                                    <th scope="col">Logo takım portföyünde</th>
+                                    <th scope="col">Logo web sitesinde</th>
+                                    <th scope="col">Formada sırt sponsoru</th>
+                                    <th scope="col">Formada göğüs sponsoru</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><th scope="row">Elmas<span>50 bin ve üzeri</span></th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td></tr>
+                                <tr><th scope="row">Platin<span>40 bin</span></th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span class="visually-hidden">Yok</span></td></tr>
+                                <tr><th scope="row">Altın<span>30 bin</span></th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span class="visually-hidden">Yok</span></td></tr>
+                                <tr><th scope="row">Gümüş<span>20 bin</span></th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span class="visually-hidden">Yok</span></td></tr>
+                                <tr><th scope="row">Bronz<span>10 bin</span></th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span class="visually-hidden">Yok</span></td></tr>
+                                <tr><th scope="row">Malzeme desteği</th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span class="visually-hidden">Yok</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="band">
+            <div class="wrap">
+                <div>
+                    <h2>Sarıca'nın bir sonraki dalışında logonuz da olsun.</h2>
+                    <p>Paketlerin ayrıntıları için sponsorluk dosyamıza göz atın ya da doğrudan bize yazın.</p>
+                    <a class="mail" href="mailto:nautilusrovteam@gmail.com">nautilusrovteam@gmail.com</a>
+                </div>
+                <div class="actions">
+                    <a href="https://drive.google.com/drive/u/0/folders/1LoAsrbIXJZn8eVaFw3ds9Mrf7ZjMMSXS" target="_blank" rel="noopener" class="btn btn-primary">Sponsorluk dosyasını aç</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap foot">
+            <div>
+                <a href="index.html" class="logo"><img class="logo-img" src="image/logo-dark.png" alt="Nautilus ROV logosu"><span class="wordmark">Nautilus ROV</span></a>
+                <div class="foot-follow">
+                    <span>Bizi takip edin</span>
+                    <ul class="foot-social">
+                        <li><a href="https://linkedin.com/company/nautilusrov" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M7.5 10.5V17"></path><path d="M7.5 7.3v.01"></path><path d="M11.5 17v-6.5"></path><path d="M11.5 13.8a3 3 0 0 1 6 0V17"></path></svg></a></li>
+                        <li><a href="https://instagram.com/nautilusrovteam" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a></li>
+                        <li><a href="https://github.com/itumtal-nautilusrov" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></li>
+                    </ul>
+                </div>
+            </div>
+            <ul class="foot-contact">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span>Etiler Mahallesi, Zeytinoğlu Caddesi No: 80<br>34337 Beşiktaş / İstanbul</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><a href="mailto:nautilusrovteam@gmail.com">nautilusrovteam@gmail.com</a></li>
+            </ul>
+            <nav class="foot-links" aria-label="Alt menü">
+                <ul>
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="sarica.html">Araçlar</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="gallery.html">Galeri</a></li>
+                    <li><a href="sponsorship.html">Sponsorluk</a></li>
+                    <li><a href="contact.html">İletişim</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="wrap foot-bottom">© <span data-year>2026</span> Nautilus ROV Takımı. Tüm hakları saklıdır.</div>
+    </footer>
+    <script src="assets/js/main.js?v=20260917"></script>
+</body>
+</html>
