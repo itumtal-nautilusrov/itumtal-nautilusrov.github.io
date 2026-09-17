@@ -1,13 +1,13 @@
 // Photo viewer: click any element with data-full to enlarge its image.
 // The caption is the image alt text unless the element sets data-caption.
 // Close with the X button, a click on the backdrop or Esc; arrows move between photos.
+// Items added later (the gallery loads from JSON) are picked up on 'gallery:ready'.
 (function () {
-    var items = Array.prototype.slice.call(document.querySelectorAll('[data-full]'));
+    var items = [];
     var viewer = document.getElementById('viewer');
-    if (!items.length || !viewer) return;
+    if (!viewer) return;
 
     var img = viewer.querySelector('.viewer-img');
-    if (items.length < 2) viewer.classList.add('single');
     var caption = viewer.querySelector('.viewer-caption');
     var current = 0;
     var lastFocus = null;
@@ -37,8 +37,16 @@
         if (lastFocus) lastFocus.focus();
     }
 
-    items.forEach(function (item, i) {
-        item.addEventListener('click', function () { open(i); });
+    function collect() {
+        items = Array.prototype.slice.call(document.querySelectorAll('[data-full]'));
+        viewer.classList.toggle('single', items.length < 2);
+    }
+
+    collect();
+    document.addEventListener('gallery:ready', collect);
+    document.addEventListener('click', function (e) {
+        var item = e.target.closest('[data-full]');
+        if (item) open(items.indexOf(item));
     });
 
     viewer.querySelector('.viewer-close').addEventListener('click', close);
