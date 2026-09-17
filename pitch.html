@@ -40,6 +40,40 @@
 
         @media (max-width: 960px) {
             .pitch-hero { grid-template-columns: 1fr; gap: 32px; padding-top: 40px; padding-bottom: 56px; }
+            .pitch-hero h1 { max-width: none; }
+        }
+
+        @media (max-width: 768px) {
+            .back-link { font-size: 0.95rem; white-space: nowrap; }
+            .pitch-hero { gap: 24px; padding-top: 24px; padding-bottom: 48px; }
+            .pitch-hero h1 { font-size: clamp(1.75rem, 7.5vw, 2.3rem); }
+            .pitch-hero .lede { font-size: 1.05rem; margin: 16px 0 28px; }
+            .row > .wrap { gap: 20px; padding-top: 48px; padding-bottom: 48px; }
+            .row-body > * + * { margin-top: 28px; }
+            .band .wrap { gap: 28px; padding-top: 64px; padding-bottom: 64px; }
+
+            /* Tiers: one block per package, benefits listed underneath. */
+            .tiers-scroll { overflow: visible; }
+            .tiers-scroll table { min-width: 0; }
+            .tiers, .tiers tbody, .tiers tr, .tiers th, .tiers td { display: block; }
+            .tiers thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+            .tiers tbody tr { padding: 16px 0; border-top: 1px solid var(--rule); }
+            .tiers tbody tr:last-child { border-bottom: 1px solid var(--rule); }
+            .tiers tbody tr:last-child > * { border-bottom: none; }
+            .tiers tbody th { padding: 0 0 8px; border: none; font-size: 1.1rem; white-space: normal; }
+            .tiers td { display: flex; align-items: center; gap: 10px; padding: 5px 0; border: none; text-align: left; font-size: 1rem; }
+            .tiers td::before { content: attr(data-label); order: 2; color: var(--ink); font-size: 0.95rem; }
+            .tiers td > span[aria-hidden] { width: 16px; }
+            .tiers td.no { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .wordmark { display: none; }
+            .pitch-hero .actions .btn, .band .actions .btn { width: 100%; text-align: center; justify-content: center; }
+            .specs th, .specs td { display: block; width: auto; padding-right: 0; }
+            .specs th { padding-bottom: 2px; }
+            .specs td { border-top: none; padding-top: 0; }
+            .specs tr:last-child th { border-bottom: none; }
         }
     </style>
 </head>
@@ -166,12 +200,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><th scope="row">Elmas<span>50 bin ve üzeri</span></th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td></tr>
-                                <tr><th scope="row">Platin<span>40 bin</span></th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span class="visually-hidden">Yok</span></td></tr>
-                                <tr><th scope="row">Altın<span>30 bin</span></th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span class="visually-hidden">Yok</span></td></tr>
-                                <tr><th scope="row">Gümüş<span>20 bin</span></th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span class="visually-hidden">Yok</span></td></tr>
-                                <tr><th scope="row">Bronz<span>10 bin</span></th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span class="visually-hidden">Yok</span></td></tr>
-                                <tr><th scope="row">Malzeme desteği</th><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td><span class="visually-hidden">Yok</span></td></tr>
+                                <tr><th scope="row">Elmas<span>50 bin ve üzeri</span></th><td data-label="Sosyal medyada teşekkür"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo takım portföyünde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo web sitesinde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada sırt sponsoru"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada göğüs sponsoru"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td></tr>
+                                <tr><th scope="row">Platin<span>40 bin</span></th><td data-label="Sosyal medyada teşekkür"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo takım portföyünde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo web sitesinde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada sırt sponsoru"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada göğüs sponsoru" class="no"><span class="visually-hidden">Yok</span></td></tr>
+                                <tr><th scope="row">Altın<span>30 bin</span></th><td data-label="Sosyal medyada teşekkür"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo takım portföyünde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo web sitesinde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada sırt sponsoru"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada göğüs sponsoru" class="no"><span class="visually-hidden">Yok</span></td></tr>
+                                <tr><th scope="row">Gümüş<span>20 bin</span></th><td data-label="Sosyal medyada teşekkür"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo takım portföyünde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo web sitesinde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada sırt sponsoru"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada göğüs sponsoru" class="no"><span class="visually-hidden">Yok</span></td></tr>
+                                <tr><th scope="row">Bronz<span>10 bin</span></th><td data-label="Sosyal medyada teşekkür"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo takım portföyünde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo web sitesinde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada sırt sponsoru"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada göğüs sponsoru" class="no"><span class="visually-hidden">Yok</span></td></tr>
+                                <tr><th scope="row">Malzeme desteği</th><td data-label="Sosyal medyada teşekkür"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo takım portföyünde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Logo web sitesinde"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada sırt sponsoru"><span aria-hidden="true">&#10003;</span><span class="visually-hidden">Var</span></td><td data-label="Formada göğüs sponsoru" class="no"><span class="visually-hidden">Yok</span></td></tr>
                             </tbody>
                         </table>
                     </div>
